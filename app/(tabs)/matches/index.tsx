@@ -15,25 +15,29 @@ import Constants from 'expo-constants';
 
 export default function Matches() {
 
-  const [date, setDate] = useState<SelectedDate>({} as SelectedDate);
-  const apiUrl = Constants.expoConfig?.extra?.API_URL + `/leagues/date/${date}?include=today.scores;today.participants;today.stage;today.group;today.round`;
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>(
+    {
+      dateString: new Date().toISOString().split('T')[0],
+      day: new Date().getDate(),
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+    } as SelectedDate
+  );
+  const apiUrl = Constants.expoConfig?.extra?.API_URL 
   const apiToken = Constants.expoConfig?.extra?.API_TOKEN;
   
   const [matches, setMatches] = useState<League[]>([]);
 
 
   useEffect(() => {
+    fetchMathesOnDate(selectedDate)
+}, []);
 
-    console.log('API URL:', apiUrl);
-    console.log('API Token:', apiToken);
+  const fetchMathesOnDate = (selectedDate: SelectedDate) => {
 
+    const fullAPiUrl = apiUrl+ `/leagues/date/${selectedDate.dateString}?include=today.scores;today.participants;today.stage;today.group;today.round`;
 
-    
-  }, []);
-
-  const fetchMathesOnDate = (day) => {
-
-    fetch(apiUrl, {
+    fetch(fullAPiUrl, {
       method: 'GET',
       headers: {
         'Authorization': `${apiToken}`,
@@ -48,10 +52,6 @@ export default function Matches() {
       return response.json();
     })
     .then(data => {
-
-      
-      console.log('Matches:', data.data);
-      console.log('Matches:', data.data[0].today);
       setMatches(data.data);
     })
     .catch(error => {
@@ -108,10 +108,9 @@ export default function Matches() {
         >
           <BottomSheetView style={styles.contentContainer}>
           <Calendar
-            onDayPress={(day: SelectedDate) => {
-              console.log('selected day', day);
+            onDayPress={(selectedDate: SelectedDate) => {
               bottomSheetRef.current?.close();
-              fetchMathesOnDate(day);
+              fetchMathesOnDate(selectedDate);
             }}
           />
           </BottomSheetView>

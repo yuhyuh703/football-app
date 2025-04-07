@@ -107,3 +107,12 @@ export interface Transfer {
   to_team_id: number; // ID of the team the player is transferring to
   type_id: number; // ID of the transfer type
 }
+
+export interface SelectedDate {
+  dateString: string; // Selected date in string format (YYYY-MM-DD)
+  day: number; // Day of the month
+  month: number; // Month (1-12)
+  timestamp: number; // Timestamp in milliseconds since epoch
+  year: number; // Year (e.g., 2025)
+
+}

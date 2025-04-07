@@ -2,7 +2,7 @@ import { View, Pressable, SectionList, StyleSheet } from "react-native";
 import { List, Card, Divider, Text, Button } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState,  useCallback, useMemo, useRef  } from "react";
-import { League, Match } from "../../../types/_matchesTypes";
+import { League, Match, SelectedDate } from "../../../types/_matchesTypes";
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
@@ -11,9 +11,11 @@ import Constants from 'expo-constants';
 
 
 
+
+
 export default function Matches() {
 
-  const [date, setDate] = useState<string>("2025-04-07");
+  const [date, setDate] = useState<SelectedDate>({} as SelectedDate);
   const apiUrl = Constants.expoConfig?.extra?.API_URL + `/leagues/date/${date}?include=today.scores;today.participants;today.stage;today.group;today.round`;
   const apiToken = Constants.expoConfig?.extra?.API_TOKEN;
   
@@ -25,11 +27,11 @@ export default function Matches() {
     console.log('API URL:', apiUrl);
     console.log('API Token:', apiToken);
 
-    fetchMathesOnDate()
+
     
   }, []);
 
-  const fetchMathesOnDate = () => {
+  const fetchMathesOnDate = (day) => {
 
     fetch(apiUrl, {
       method: 'GET',
@@ -58,6 +60,12 @@ export default function Matches() {
 
   }
   
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   
  
@@ -65,6 +73,12 @@ export default function Matches() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <SafeAreaView style={{ flex: 1 }}>
+        <Button
+        children='calendar'
+        onPress={() => {bottomSheetRef.current?.snapToIndex(0)}}
+        >
+
+        </Button>
           <View style={{ padding: 10 }}>
             <FlatList
               data={matches}
@@ -85,6 +99,23 @@ export default function Matches() {
               )}
             />
           </View>
+
+          <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={['25%', '50%', '90%']}
+          onChange={handleSheetChanges}
+          index={-1}
+        >
+          <BottomSheetView style={styles.contentContainer}>
+          <Calendar
+            onDayPress={(day: SelectedDate) => {
+              console.log('selected day', day);
+              bottomSheetRef.current?.close();
+              fetchMathesOnDate(day);
+            }}
+          />
+          </BottomSheetView>
+        </BottomSheet>
         </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>

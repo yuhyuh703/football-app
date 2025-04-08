@@ -93,7 +93,7 @@ export default function Matches() {
                         <Card.Title title={match.name} subtitle={`Starting At: ${match.starting_at}`} />
                         <Card.Content>
                           <Text>{match.participants[0].name} vs {match.participants[1].name}</Text>
-                          <Text>Score: {match.scores[1].home} - {match.scores[1].away}</Text>
+                          <Text>Score: {match.scores[0]?.score?.goals} - {match.scores[0]?.score?.goals}</Text>
                         </Card.Content>
                       </Card>
                     ))}
@@ -110,7 +110,7 @@ export default function Matches() {
           index={-1}
         >
           <BottomSheetView style={styles.contentContainer}>
-          <Calendar
+          <Calendar style={{ width : '100%' }}  
             onDayPress={(selectedDate: SelectedDate) => {
               bottomSheetRef.current?.close();
               fetchMathesOnDate(selectedDate);
@@ -134,6 +134,5 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    alignItems: 'center',
   },
 });

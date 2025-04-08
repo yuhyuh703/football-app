@@ -37,7 +37,7 @@ export interface Match {
   result_info: string | null; // Additional result information (nullable)
   details: string | null; // Additional match details (nullable)
   participants: Participant[]; // Array of participants (teams)
-  scores: Score[]; // Array of scores (if available)
+  scores: Scores[]; // Array of scores (if available)
   round: Round; // Round information
   stage: Stage; // Stage information
 }
@@ -55,9 +55,16 @@ export interface Participant {
   type: string; // Type of the team (e.g., "domestic")
 }
 
-export interface Score {
-  home: number | null; // Home team score
-  away: number | null; // Away team score
+export interface Scores {
+  description: string; // Description of the score (e.g., "CURRENT")
+  fixture_id: number; // Fixture ID
+  id: number; // Score ID
+  participant_id: number; // Participant ID
+  score: {
+    goals: number; // Number of goals scored
+    participant: string; // Participant (e.g., "away")
+  };
+  type_id: number; // Type ID of the score
 }
 
 export interface Round {
@@ -111,3 +118,4 @@ export interface SelectedDate {
   year: number; // Year (e.g., 2025)
 
 }
+

@@ -1,4 +1,3 @@
-// types/matchTypes.ts
 export interface League {
   active: boolean; // Indicates if the match is active
   category: number; // Category ID
@@ -43,7 +42,6 @@ export interface Match {
   stage: Stage; // Stage information
 }
 
-// Define the structure for participants (teams)
 export interface Participant {
   id: number; // Team ID
   sport_id: number; // Sport ID
@@ -57,13 +55,11 @@ export interface Participant {
   type: string; // Type of the team (e.g., "domestic")
 }
 
-// Define the structure for scores
 export interface Score {
   home: number | null; // Home team score
   away: number | null; // Away team score
 }
 
-// Define the structure for round information
 export interface Round {
   id: number; // Round ID
   name: string; // Round name (e.g., "31")
@@ -78,7 +74,6 @@ export interface Round {
   is_current: boolean; // Indicates if this is the current round
 }
 
-// Define the structure for stage information
 export interface Stage {
   id: number; // Stage ID
   sport_id: number; // Sport ID

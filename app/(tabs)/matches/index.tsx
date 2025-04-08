@@ -52,6 +52,7 @@ export default function Matches() {
       return response.json();
     })
     .then(data => {
+      console.log('matches fetched:', data.data);  
       setMatches(data.data);
     })
     .catch(error => {
@@ -85,14 +86,16 @@ export default function Matches() {
               keyExtractor={(item) => item.id.toString()}
               renderItem={({ item }) => (
                 <Card style={{ marginBottom: 15 }}>
-                  <Card.Title title={item.name} />
+                  <Card.Title title={item.name} subtitle={`Round: ${item.today[0].round.name}`} />
                   <Card.Content>
                     {item.today.map((match: Match, index: number) => (
-                      <View key={index} style={{ marginBottom: 10 }}>
-                        <Text>{match.name}</Text>
-                        <Text>{match.starting_at}</Text>
-                        {index < item.today.length - 1 && <Divider style={{ marginVertical: 10 }} />}
-                      </View>
+                      <Card key={index} style={{ marginBottom: 10 }}>
+                        <Card.Title title={match.name} subtitle={`Starting At: ${match.starting_at}`} />
+                        <Card.Content>
+                          <Text>{match.participants[0].name} vs {match.participants[1].name}</Text>
+                          <Text>Score: {match.scores[1].home} - {match.scores[1].away}</Text>
+                        </Card.Content>
+                      </Card>
                     ))}
                   </Card.Content>
                 </Card>

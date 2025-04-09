@@ -1,0 +1,58 @@
+app/
+│
+├── index.tsx                     # Entry point (maybe show today's matches)
+│
+├── matches/
+│   ├── index.tsx                 # All matches, maybe filter by date
+│   └── live.tsx                  # Live matches screen
+│
+├── league/
+│   └── [leagueId]/
+│       ├── index.tsx             # Tabs: Standings, Schedule, TopScorers
+│       ├── Standings.tsx
+│       ├── Schedule.tsx
+│       └── TopScorers.tsx
+│
+├── team/
+│   └── [teamId]/
+│       ├── index.tsx             # Tabs: Squad, Form, Fixtures
+│       ├── Squad.tsx
+│       ├── Form.tsx
+│       └── Fixtures.tsx
+│
+├── player/
+│   └── [playerId].tsx            # Player info screen (stats, history, etc.)
+│
+├── transfers/
+│   └── index.tsx                 # Transfers overview (latest transfers, by team etc.)
+│
+components/
+│
+├── Match/
+│   ├── MatchCard.tsx
+│   └── MatchList.tsx
+│
+├── League/
+│   ├── LeagueHeader.tsx
+│   ├── StandingTable.tsx
+│   └── TopScorerList.tsx
+│
+├── Team/
+│   ├── PlayerList.tsx
+│   ├── TeamFormGraph.tsx
+│   └── TeamHeader.tsx
+│
+├── Player/
+│   ├── PlayerCard.tsx
+│   └── PlayerStats.tsx
+│
+├── Transfer/
+│   ├── TransferList.tsx
+│   └── TransferItem.tsx
+│
+lib/
+│
+├── api.ts                        # All your API call logic (centralized)
+├── types.ts                      # Global TypeScript interfaces/types
+├── constants.ts                  # Static values (league ids, colors, etc.)
+├── utils.ts                      # Reusable helper functions

@@ -15,6 +15,12 @@ export default function MatchList({ matches }: MatchListProps) {
         router.push(`/league/${id}`);
 
     }
+    
+    if (!matches || matches.length === 0) {
+        return (
+            <Text>No matches this day</Text>
+        );
+    }
 
 
     return(

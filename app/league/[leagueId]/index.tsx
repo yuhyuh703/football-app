@@ -1,12 +1,47 @@
 import {useLocalSearchParams, Tabs} from 'expo-router';
-import { Text, View } from 'react-native';
-import Standings from './(tabs)/Standings';
+import { Text, View, StyleSheet } from 'react-native';
+import Standings from '@/components/League/Standings/Standings';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { SegmentedButtons } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function League() {
     const { leagueId } = useLocalSearchParams();
-    console.log('League ID:', typeof leagueId);
-    console.log('League ID:', leagueId);
+    const [selectedTab, setSelectedTab] = useState("standings");
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        navigation.setOptions({
+          title: `League ${leagueId}`, // Set the header title dynamically
+        });
+      }, [leagueId]);
+
     return(
-       <Standings />
+        <SafeAreaView style={styles.container}>
+            <SegmentedButtons
+                value={selectedTab}
+                onValueChange={setSelectedTab}
+                buttons={[
+                {
+                    value: 'standings',
+                    label: 'Standings',
+                },
+                {
+                    value: 'topscorers',
+                    label: 'Top scorers',
+                },
+                ]}
+            />
+            {selectedTab === 'standings' && <Standings />}
+            {selectedTab === 'topscorers' && <Text>Top scorers</Text>}
+        </SafeAreaView>
+       
     )
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 16,
+    },
+  });

@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import { fetchLeagueInfo } from "@/lib/api";
 import { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import StandingTable from '@/components/League/StandingTable';
+import StandingTable from '@/components/League/Standings/StandingTable';
 import { StandingTeam } from '@/types/types';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

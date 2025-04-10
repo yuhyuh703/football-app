@@ -19,9 +19,19 @@ export default function StandingTable({standingData}: StandingTableProps) {
       renderItem={({ item }) => {
         console.log("Rendering row:", item);
         return (
-            <View style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-                <Text>{item.position}</Text>
+            <View
+              style={{
+                padding: 10,
+                borderBottomWidth: 1,
+                borderBottomColor: '#ccc',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center', 
+              }}
+            >
+                <Text>{item.position}.</Text>
                 <Text>{item.participant.name}</Text>
+                <Text>{item.points}</Text>
             </View>
         )
       }}

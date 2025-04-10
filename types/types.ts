@@ -119,3 +119,18 @@ export interface SelectedDate {
 
 }
 
+export interface StandingTeam {
+  group_id: number | null;
+  id: number; 
+  league_id: number;
+  participant: Participant;
+  participant_id: number;
+  points: number; // Points earned by the team
+  position: number; // Position in the standings
+  result: string; // Result of the match (e.g., "up", "down")
+  round_id: number; // Round ID
+  season_id: number; // Season ID
+  sport_id: number; // Sport ID
+  stage_id: number; // Stage ID
+  standing_rule_id: number; // Standing rule ID
+}

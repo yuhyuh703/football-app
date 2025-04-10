@@ -3,7 +3,7 @@ import { Link } from 'expo-router';
 import { useRouter } from 'expo-router';
 import Constants from 'expo-constants';
 import { useEffect, useState } from "react";
-import { Transfer } from "@/types/_matchesTypes";
+import { Transfer } from "@/types/types";
 import { FlatList } from "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

@@ -2,7 +2,7 @@ import { View, Pressable, SectionList, StyleSheet } from "react-native";
 import { List, Card, Divider, Text, Button } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState,  useCallback, useMemo, useRef  } from "react";
-import { League, Match, SelectedDate } from "../../../types/_matchesTypes";
+import { League, Match, SelectedDate } from "../../../types/types";
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
@@ -11,7 +11,6 @@ import MatchList from "@/components/Match/MatchList";
 import { fetchMatchesByDate } from "@/lib/api";
 
 export default function Matches() {
-
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(
     {
       dateString: new Date().toISOString().split('T')[0],
@@ -23,11 +22,11 @@ export default function Matches() {
   const [matches, setMatches] = useState<League[]>([]);
 
   useEffect(() => {
-    console.log('selectedDate in useEffect', selectedDate)
     const loadMatches = async () => {
       try {
         const data = await fetchMatchesByDate(selectedDate);
         setMatches(data);
+        console.log('Matches data:', data);
       } catch (error) {
         console.error("Error loading matches:", error);
       }

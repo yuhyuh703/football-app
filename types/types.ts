@@ -53,6 +53,7 @@ export interface Participant {
   image_path: string; // URL to the team image
   founded: number; // Year the team was founded
   type: string; // Type of the team (e.g., "domestic")
+  last_played_at: string; // Last played date and time (YYYY-MM-DD HH:mm:ss)
 }
 
 export interface Scores {
@@ -133,4 +134,89 @@ export interface StandingTeam {
   sport_id: number; // Sport ID
   stage_id: number; // Stage ID
   standing_rule_id: number; // Standing rule ID
+}
+
+export interface TopScorer {
+  id: number; // Top scorer ID
+  participant_id: number; // ID of the participant (team)
+  participant: Participant; // Participant object
+  playerr_id: number; // ID of the player
+  player: Player; // Player object
+  position: number; // Position of the player in the top scorers list
+  season_id: number; // Season ID
+  season: Season; // Season object
+  total: number; // Total goals scored by the player
+  type_id: number; // Type ID of the top scorer
+  type: Type; // Type object
+
+}
+
+export interface Player {
+  id: number; // Player ID
+  first_name: string; // First name of the player
+  last_name: string; // Last name of the player
+  display_name: string; // Display name of the player
+  common_name: string; // Common name of the player
+  date_of_birth: string; // Date of birth (YYYY-MM-DD)
+  gender: string;
+  height: number; // Height of the player in cm
+  weight: number; // Weight of the player in kg
+  nationality_id: number
+  nationality: Nationality
+  country_id: number; // Country ID
+  city_id: number; // City ID
+  position_id: number; // Position ID
+  position: Position; // Position object
+  detailed_position_id: number; // Detailed position ID
+  sport_id: number; // Sport ID
+  type_id: number; // Type ID
+  image_path: string; // URL to the player's image
+}
+
+export interface Nationality {
+  border: string[]; // Array of bordering countries
+  continent_id: number; // Continent ID
+  fifa_name: string; // FIFA name of the country
+  id: number; // Country ID
+  image_path: string; // URL to the country's image
+  iso2: string; // ISO 3166-1 alpha-2 code
+  iso3: string; // ISO 3166-1 alpha-3 code
+  latitude: string; // Latitude of the country
+  longitude: string; // Longitude of the country
+  name: string; // Country name
+  official_name: string; // Official name of the country
+}
+
+export interface Position {
+  code: string; // Position code (e.g., "midfielder")
+  developer_name: string; // Developer name of the position
+  id: number; // Position ID
+  model_type: string; // Model type of the position
+  name: string; // Name of the position (e.g., "Midfielder")
+  stat_group: string | null; // Stat group (nullable)
+}
+
+export interface Season {
+  ending_at: string; // End date of the season (YYYY-MM-DD)
+  finished: boolean; // Indicates if the season is finished
+  games_in_current_week: boolean; // Indicates if games are in the current week
+  id: number; // Season ID
+  is_current: boolean; // Indicates if this is the current season
+  league: League; // League object
+  league_id: number; // League ID
+  name: string; // Season name (e.g., "2024/2025")
+  pending: boolean; // Indicates if the season is pending
+  sport_id: number; // Sport ID
+  standings_recalculated_at: string; // Last recalculated date (YYYY-MM-DD HH:mm:ss)
+  starting_at: string; // Start date of the season (YYYY-MM-DD)
+  tie_breaker_rule_id: number; // Tie breaker rule ID
+}
+
+export interface Type {
+  code: string; // Type code (e.g., "goal")
+  developer_name: string; // Developer name of the type
+  id: number; // Type ID
+  model_type: string; // Model type of the type
+  name: string; // Name of the type (e.g., "Goal")
+  stat_group: string | null; // Stat group (nullable)
 }

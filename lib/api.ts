@@ -23,6 +23,7 @@ export async function fetchMatchesByDate(selectedDate: SelectedDate): Promise<Le
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
+    console.log('Matches fetched:', data.data);
     return data.data; 
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -30,9 +31,9 @@ export async function fetchMatchesByDate(selectedDate: SelectedDate): Promise<Le
   }
 }
 
-export async function fetchLeagueInfo(ID: string): Promise<unknown> {
-    console.log('League ID in api file:', ID);
-    const fullApiUrl = `${apiUrl}/standings/live/leagues/${ID}?include=participant`;
+export async function fetchLeagueStandings(seasonID: number): Promise<unknown> {
+
+    const fullApiUrl = `${apiUrl}/standings/seasons/${seasonID}?include=participant;rule.type;details.type;form;stage;league;group`;
     try{
         const response = await fetch(fullApiUrl,{
             method: 'GET',
@@ -53,5 +54,32 @@ export async function fetchLeagueInfo(ID: string): Promise<unknown> {
         throw error;
     }
 
+
+}
+
+export async function fetchTopScorers(seasonID: number): Promise<unknown> {
+
+  const fullApiUrl = `https://api.sportmonks.com/v3/football/topscorers/seasons/${seasonID}?include=player.nationality;player.position;participant;type;season.league&filters=seasontopscorerTypes:208`
+  
+  try{
+    const response = await fetch (fullApiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `${apiToken}`,
+        'Content-Type': 'application/json'
+      },
+    })
+    if(!response.ok){
+      console.error(`Response status: ${response.status} ${response.statusText}`);
+      console.error('Response body:', await response.text());
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log('Top scorers fetched:', data.data);
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
 
 }

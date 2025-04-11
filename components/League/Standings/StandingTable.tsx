@@ -8,16 +8,12 @@ interface StandingTableProps {
 }
 
 export default function StandingTable({standingData}: StandingTableProps) {
-
-    console.log('Standing Data in table:', standingData);
   return (
     <View style={{ flex: 1 }}>
-    <Text>Standing Table</Text>
     <FlatList
       data={standingData}
       keyExtractor={(item) => item.participant.id.toString()}
       renderItem={({ item }) => {
-        console.log("Rendering row:", item);
         return (
             <View
               style={{

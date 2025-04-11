@@ -10,9 +10,12 @@ interface MatchListProps {
   
 export default function MatchList({ matches }: MatchListProps) {
 
-    const handleLeaguePress = (id: number) => {
-        console.log('League ID:', id);
-        router.push(`/league/${id}`);
+  console.log('Matches:', matches);
+
+    const handleLeaguePress = (seasonID: number) => {
+        console.log('League ID in handle league:', seasonID);
+        console.log('pushing to league:', `/league/${seasonID}`);
+        router.push(`/league/${seasonID}`);
 
     }
     
@@ -30,7 +33,7 @@ export default function MatchList({ matches }: MatchListProps) {
               renderItem={({ item }) => (
                 
                 <Card style={{ marginBottom: 15 }}>
-                  <TouchableOpacity onPress={() => handleLeaguePress(item.id)}>
+                  <TouchableOpacity onPress={() => handleLeaguePress(item.today[0].season_id)}>
                   <Card.Title title={item.name} subtitle={`Round: ${item.today[0].round.name}`} />
                   </TouchableOpacity>
                   <Card.Content>

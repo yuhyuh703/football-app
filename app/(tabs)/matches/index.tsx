@@ -1,5 +1,5 @@
 import { View, Pressable, SectionList, StyleSheet } from "react-native";
-import { List, Card, Divider, Text, Button } from "react-native-paper";
+import { List, Card, Divider, Text, Button, IconButton } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState,  useCallback, useMemo, useRef  } from "react";
 import { League, Match, SelectedDate } from "../../../types/types";
@@ -47,11 +47,18 @@ export default function Matches() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <Button
-        children='calendar'
-        onPress={() => {bottomSheetRef.current?.snapToIndex(0)}}
-        >
-        </Button>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <IconButton
+          icon= 'access-point'
+          onPress={() => console.log('Live matches pressed')}
+          />
+          <IconButton
+     
+          onPress={() => {bottomSheetRef.current?.snapToIndex(0)}}
+          icon="calendar"
+          />
+          
+        </View>
         <View style={{ padding: 10 }}>
           <MatchList matches={matches} />
         </View>

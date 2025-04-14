@@ -23,7 +23,7 @@ export async function fetchMatchesByDate(selectedDate: SelectedDate): Promise<Le
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log('Matches fetched:', data.data);
+    //console.log('Matches fetched:', data.data);
     return data.data; 
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -75,11 +75,65 @@ export async function fetchTopScorers(seasonID: number): Promise<unknown> {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log('Top scorers fetched:', data.data);
     return data.data;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
   }
 
+}
+
+export async function fetchFullParticipantInfo (teamID: number) {
+  console.log('Fetching team info for teamID:', teamID);
+  //const fullApiUrl = `${apiUrl}/teams/${teamID}`
+  const fullApiUrl = `https://api.sportmonks.com/v3/football/teams/${teamID}?include=latest;upcoming;venue;players.player.nationality;coaches.coach;rankings`;
+  try{
+    const response = await fetch(fullApiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `${apiToken}`,
+        'Content-Type': 'application/json',
+
+      }
+    })
+    if(!response.ok){
+      console.error(`Response status: ${response.status} ${response.statusText}`);
+      console.error('Response body:', await response.text());
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log('Team info data:', data.data);
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+
+export async function fetchPlayerByID(playerID: number){
+  console.log('Fetching player info for playerID:', playerID);
+
+  const fullApiUrl = `https://api.sportmonks.com/v3/football/players/${playerID}?include=nationality`
+  
+  try{
+    const response = await fetch(fullApiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `${apiToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    if(!response.ok){
+      console.error(`Response status: ${response.status} ${response.statusText}`);
+      console.error('Response body:', await response.text());
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log('Player data:', data);
+    return data.data;
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;  
+  }
 }

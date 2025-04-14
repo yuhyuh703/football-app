@@ -33,8 +33,6 @@ export default function TopScorers() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
-                <Text>Top Scorers</Text>
-
                 <TopScorersTable topscorersData={topScorers}/>
             </SafeAreaView>
             </SafeAreaProvider>

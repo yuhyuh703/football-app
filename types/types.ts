@@ -141,7 +141,7 @@ export interface TopScorer {
   participant_id: number; // ID of the participant (team)
   participant: Participant; // Participant object
   playerr_id: number; // ID of the player
-  player: Player; // Player object
+  player: PlayerDetails; // Player object
   position: number; // Position of the player in the top scorers list
   season_id: number; // Season ID
   season: Season; // Season object
@@ -151,7 +151,7 @@ export interface TopScorer {
 
 }
 
-export interface Player {
+export interface PlayerDetails {
   id: number; // Player ID
   first_name: string; // First name of the player
   last_name: string; // Last name of the player
@@ -171,6 +171,20 @@ export interface Player {
   sport_id: number; // Sport ID
   type_id: number; // Type ID
   image_path: string; // URL to the player's image
+}
+
+export interface Player {
+  captain: boolean; // Indicates if the player is a captain
+  detailed_position_id: number; // Detailed position ID
+  end: string; // End date of the contract (YYYY-MM-DD)
+  id: number; // Player ID
+  jersey_number: number; // Jersey number of the player
+  player: PlayerDetails; // Player details object
+  player_id: number; // Player ID
+  position_id: number; // Position ID
+  start: string; // Start date of the contract (YYYY-MM-DD)
+  team_id: number; // Team ID
+  transfer_id: number | null; // Transfer ID (nullable)
 }
 
 export interface Nationality {
@@ -219,4 +233,86 @@ export interface Type {
   model_type: string; // Model type of the type
   name: string; // Name of the type (e.g., "Goal")
   stat_group: string | null; // Stat group (nullable)
+}
+
+export interface FullParticipant extends Participant {
+  latest: LatestUpcoming[]; // Array of latest matches
+  upcoming: LatestUpcoming[]; // Array of upcoming matches
+  venue: Venue; // Venue object
+  players: Player[]; // Array of players in the team
+  coaches: Coach[]; // Array of coaches in the team
+
+}
+
+export interface Coach {
+  active: boolean; // Indicates if the coach is active
+  coach_id: number; // Coach ID
+  coach: CoachDetails; // Coach details object
+  id: number; // Coach ID
+  position_id: number; // Position ID
+  start: string; // Start date of the contract (YYYY-MM-DD)
+  team_id: number; // Team ID
+  temporary: boolean; // Indicates if the coach is temporary
+  end: string; // End date of the contract (YYYY-MM-DD)
+
+
+}
+
+export interface CoachDetails {
+  city_id: number | null; // City ID (nullable)
+  common_name: string; // Common name of the coach
+  country_id: number; // Country ID
+  date_of_birth: string; // Date of birth (YYYY-MM-DD)
+  display_name: string; // Display name of the coach
+  firstname: string; // First name of the coach
+  gender: string; 
+  height: number; // Height of the coach in cm
+  id: number; // Coach ID
+  image_path: string; // URL to the coach's image
+  lastname: string; // Last name of the coach
+  name: string; // Name of the coach (e.g., "Jürgen Klopp")
+  nationality_id: number
+  player_id: number; // Player ID
+  sport_id: number; // Sport ID
+  weight: number; // Weight of the coach in kg
+}
+
+export interface LatestUpcoming {
+  aggregate_id: number | null; // Aggregate ID (nullable)
+  details: string | null; // Additional details (nullable)
+  group_id: number | null; // Group ID (nullable)
+  has_odds: boolean; // Indicates if odds are available
+  has_premium_odds: boolean; // Indicates if premium odds are available
+  id: number; // Latest ID
+  league_id: number; // League ID
+  leg: string; // Match leg (e.g., "1/1")
+  length: number; // Match length in minutes
+  meta: { location: string }; // Metadata (e.g., location)
+  name: string; // Match name (e.g., "FC Barcelona vs Real Betis")
+  placeholder: boolean; // Indicates if this is a placeholder match
+  result_info: string | null; // Additional result information (nullable)
+  round_id: number; // Round ID
+  season_id: number; // Season ID
+  sport_id: number; // Sport ID
+  stage_id: number; // Stage ID
+  starting_at: string; // Match start time (YYYY-MM-DD HH:mm:ss)
+  starting_at_timestamp: number; // Match start time as a Unix timestamp
+  state_id: number; // State ID
+  venue_id: number; // Venue ID
+}
+
+export interface Venue {
+  address: string; // Venue address
+  capacity: number; // Venue capacity
+  city_id: number; // City ID
+  city_name: string; // City name
+  country_id: number; // Country ID
+  id: number; // Venue ID
+  image_path: string; // URL to the venue image
+  latitude: string; // Latitude of the venue
+  longitude: string; // Longitude of the venue
+  name: string; // Venue name (e.g., "Camp Nou")
+  national_team: boolean; // Indicates if this is a national team venue
+  surface: string; // Surface type (e.g., "grass")
+  zipcode: string; // Zip code of the venue
 }

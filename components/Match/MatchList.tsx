@@ -1,60 +1,18 @@
-import { FlatList } from "react-native-gesture-handler"
-import { Card, Text } from "react-native-paper";
-import { League, Match } from "../../types/types";
-import { Touchable, TouchableOpacity } from "react-native";
-import { router } from 'expo-router';
+import { FlatList } from 'react-native';
+import LeagueCard from './LeagueCard';
+import { League } from '@/types/types';
+import { Text } from 'react-native-paper';
 
-interface MatchListProps {
-    matches: League[];
-}
-  
-export default function MatchList({ matches }: MatchListProps) {
+export default function MatchList({ matches }: { matches: League[] }) {
+  if (!matches || matches.length === 0) {
+    return <Text>No matches this day</Text>;
+  }
 
-  const handleLeaguePress = (seasonID: number, leagueName: string, image_path: string) => {
-    router.push({
-      pathname: "/league/[seasonID]",
-      params: {
-        seasonID,
-        leagueName,
-        image_path
-        
-      },
-    });
-  };
-  
-    
-    if (!matches || matches.length === 0) {
-        return (
-            <Text>No matches this day</Text>
-        );
-    }
-
-
-    return(
-        <FlatList
-              data={matches}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                
-                <Card style={{ marginBottom: 15 }}>
-                 <TouchableOpacity onPress={() => handleLeaguePress(item.today[0].season_id, item.name, item.image_path)}>
-
-                  <Card.Title title={item.name} subtitle={`Round: ${item.today[0].round.name}`} />
-                  </TouchableOpacity>
-                  <Card.Content>
-                    {item.today.map((match: Match, index: number) => (
-                      <Card key={index} style={{ marginBottom: 10 }}>
-                        <Card.Title title={match.name} subtitle={`Starting At: ${match.starting_at}`} />
-                        <Card.Content>
-                          <Text>{match.participants[0].name} vs {match.participants[1].name}</Text>
-                          <Text>Score: {match.scores[0]?.score?.goals} - {match.scores[0]?.score?.goals}</Text>
-                        </Card.Content>
-                      </Card>
-                    ))}
-                  </Card.Content>
-                </Card>
-              )}
-            />
-    )
-
+  return (
+    <FlatList
+      data={matches}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <LeagueCard league={item} />}
+    />
+  );
 }

@@ -71,35 +71,44 @@ export default function Matches() {
           snapPoints={['25%', '50%', '90%']}
           onChange={handleSheetChanges}
           index={-1}
+          backgroundStyle={{ backgroundColor: '#f8f9fa' }}
+          
         >
           <BottomSheetView style={styles.contentContainer}>
             <Calendar style={{ width : '100%' }}  
               onDayPress={async (day: SelectedDate) => {
                 bottomSheetRef.current?.close();
                 console.log(day, 'pressed')
-                setSelectedDate(day); 
+                setSelectedDate(day);
+                
+              }}
+              markedDates={{
+                [selectedDate.dateString]: {
+                  selected: true,
+                  selectedColor: '#4CAF50', // Background color for the selected date
+                  selectedTextColor: '#ffffff', // Text color for the selected date
+                },
               }}
               theme={{
-    backgroundColor: '#ffffff', // Background color of the calendar
-    calendarBackground: '#f8f9fa', // Background color of the calendar container
-    textSectionTitleColor: '#b6c1cd', // Color of month and day titles
-    selectedDayBackgroundColor: '#4CAF50', // Background color of the selected day
-    selectedDayTextColor: '#ffffff', // Text color of the selected day
-    todayTextColor: '#FF5722', // Text color of today's date
-    dayTextColor: '#2d4150', // Default text color for days
-    textDisabledColor: '#d9e1e8', // Text color for disabled days
-    dotColor: '#00adf5', // Dot color for marked dates
-    selectedDotColor: '#ffffff', // Dot color for marked dates on the selected day
-    arrowColor: '#4CAF50', // Color of the navigation arrows
-    monthTextColor: '#4CAF50', // Text color for the month title
-    indicatorColor: '#4CAF50', // Indicator color for loading
-    textDayFontWeight: '300', // Font weight for day numbers
-    textMonthFontWeight: 'bold', // Font weight for the month title
-    textDayHeaderFontWeight: '300', // Font weight for day headers (e.g., Mon, Tue)
-    textDayFontSize: 16, // Font size for day numbers
-    textMonthFontSize: 18, // Font size for the month title
-    textDayHeaderFontSize: 14, // Font size for day headers
-  }}
+              backgroundColor: '#f8f9fa', // Background color of the calendar
+              calendarBackground: '#f8f9fa', // Background color of the calendar container
+              textSectionTitleColor: '#b6c1cd', // Color of month and day titles
+              selectedDayBackgroundColor: '#4CAF50', // Background color of the selected day
+              selectedDayTextColor: '#ffffff', // Text color of the selected day
+              todayTextColor: '#FF5722', // Text color of today's date
+              dayTextColor: '#2d4150', // Default text color for days
+              dotColor: '#00adf5', // Dot color for marked dates
+              selectedDotColor: '#ffffff', // Dot color for marked dates on the selected day
+              arrowColor: '#4CAF50', // Color of the navigation arrows
+              monthTextColor: '#4CAF50', // Text color for the month title
+              indicatorColor: '#4CAF50', // Indicator color for loading
+              textDayFontWeight: '300', // Font weight for day numbers
+              textMonthFontWeight: 'bold', // Font weight for the month title
+              textDayHeaderFontWeight: '300', // Font weight for day headers (e.g., Mon, Tue)
+              textDayFontSize: 16, // Font size for day numbers
+              textMonthFontSize: 18, // Font size for the month title
+              textDayHeaderFontSize: 14, // Font size for day headers
+            }}
               
             />
           </BottomSheetView>

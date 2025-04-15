@@ -5,24 +5,30 @@ import { useEffect, useState } from 'react';
 
 
 export default function MatchCard({ match }: { match: Match }) {
-
     const [scores, setScores] = useState<{ home: number; away: number }>(
         { home: 0, away: 0 }
     );
-    useEffect(() => {
-        const homeScore: number = match.scores.find((score) => score.description === 'CURRENT' && score.score.participant === 'home')?.score?.goals || 0;
-        const awayScore: number = match.scores.find((score) => score.description === 'CURRENT' && score.score.participant === 'away')?.score?.goals || 0;
-        setScores({ home: homeScore, away: awayScore });
+
+    function getScore(match: Match, team: string) {
+      return match.scores.find(
+        (score) => score.description === 'CURRENT' && score.score.participant === team
+      )?.score?.goals ?? 0;
+    }
+
     
-       }, []);
+
+    useEffect(() => {
+        setScores({ home: getScore(match, 'home'), away: getScore(match, 'away') });
+    
+       }, [match]);
 
   return (
     <Card style={styles.card}>
       <Card.Title title={match.name} subtitle={`Kickoff: ${match.starting_at}`} />
       <Card.Content>
-        <Text>
-            {scores.home} - {scores.away}
-        </Text>
+      <Text style={styles.score}>
+        {match.round.is_current ? `${scores.home} : ${scores.away}` : ''}
+      </Text>
       </Card.Content>
     </Card>
   );
@@ -41,9 +47,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   score: {
-    marginTop: 4,
-    fontSize: 14,
-    color: '#555',
+    fontSize: 16,
     justifyContent: 'center',
   },
 });

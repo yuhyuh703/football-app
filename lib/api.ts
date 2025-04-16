@@ -137,3 +137,27 @@ export async function fetchPlayerByID(playerID: number){
     throw error;  
   }
 }
+
+export async function fetchMatchInfo(fixtureID: number) {
+  const fullApiUrl = `${apiUrl}/fixtures/${fixtureID}?include=participants;league;venue;state;scores;events.type;events.period;events.player;statistics.type;sidelined.sideline.player;sidelined.sideline.type;weatherReport`
+  try{
+    const response = await fetch(fullApiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `${apiToken}`,
+        'Content-Type': 'application/json'
+      }
+  })
+    if(!response.ok){
+      console.error(`Response status: ${response.status} ${response.statusText}`);
+      console.error('Response body:', await response.text());
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log('Match info data:', data);
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}

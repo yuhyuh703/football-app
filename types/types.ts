@@ -78,8 +78,33 @@ export interface Round {
   starting_at: string; // Round start date
   ending_at: string; // Round end date
   finished: boolean; // Indicates if the round is finished
+  fixtures: Fixture[]; // Array of matches in the round
   games_in_current_week: boolean; // Indicates if games are in the current week
   is_current: boolean; // Indicates if this is the current round
+}
+
+export interface Fixture {
+  aggregate_id: number | null; // Aggregate ID (nullable)
+  details: string | null; // Additional details (nullable)
+  group_id: number | null; // Group ID (nullable)
+  has_odds: boolean; // Indicates if odds are available
+  has_premium_odds: boolean; // Indicates if premium odds are available
+  id: number; // Fixture ID
+  league_id: number; // League ID
+  leg: string; // Match leg (e.g., "1/1")
+  length: number; // Match length in minutes
+  name: string; // Match name (e.g., "Newcastle United vs Crystal Palace")
+  placeholder: boolean; // Indicates if this is a placeholder match
+  result_info: string | null; // Additional result information (nullable)
+  round_id: number; // Round ID
+  season_id: number; // Season ID
+  sport_id: number; // Sport ID
+  stage_id: number; // Stage ID
+  starting_at: string; // Match start time (YYYY-MM-DD HH:mm:ss)
+  starting_at_timestamp: number; // Match start time as a Unix timestamp
+  state_id: number; // State ID
+  venue_id: number; // Venue ID
+  venue: Venue; // Venue object
 }
 
 export interface Stage {

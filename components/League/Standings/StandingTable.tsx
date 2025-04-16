@@ -10,11 +10,11 @@ interface StandingTableProps {
 
 export default function StandingTable({standingData}: StandingTableProps) {
   const router = useRouter();
-  const handleTeamPress = (teamID: number, teamName: string) => {
-    console.log('Team ID:', teamID);
-    console.log('Team Name:', teamName);
+
+  const handleTeamPress = (teamID: number) => {
     router.push(`/team/${teamID}`);
   };
+
   return (
     <View style={{ flex: 1 }}>
     <FlatList
@@ -22,7 +22,7 @@ export default function StandingTable({standingData}: StandingTableProps) {
       keyExtractor={(item) => item.participant.id.toString()}
       renderItem={({ item }) => {
         return (
-            <TouchableOpacity onPress={() => {handleTeamPress(item.participant_id, item.participant.name)}}>
+            <TouchableOpacity onPress={() => {handleTeamPress(item.participant_id)}}>
             <View
               style={{
                 padding: 10,

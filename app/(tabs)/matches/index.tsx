@@ -9,6 +9,7 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Constants from 'expo-constants';
 import MatchList from "@/components/Match/MatchList";
 import { fetchMatchesByDate } from "@/lib/api";
+import { router } from "expo-router";
 
 export default function Matches() {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(
@@ -41,6 +42,10 @@ export default function Matches() {
     console.log('handleSheetChanges', index);
   }, []);
 
+  const handelLiveMatchesPress = () => {
+    router.push('/livematches')
+  }
+
   
  
   return (
@@ -50,7 +55,7 @@ export default function Matches() {
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <IconButton
           icon= 'access-point'
-          onPress={() => console.log('Live matches pressed')}
+          onPress={handelLiveMatchesPress}
           />
           <View style={{flexDirection: 'row'}}>
             <Text style={{ margin: 20 }}>

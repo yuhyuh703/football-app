@@ -161,3 +161,30 @@ export async function fetchMatchInfo(fixtureID: number) {
     throw error;
   }
 }
+
+export async function fetchLiveMatches() {
+  console.log('Fetching live matches');
+
+  const fullApiUrl = `${apiUrl}/livescores/inplay?include=participants;scores;venue;periods;events;league`
+  try{
+    const reponse = await fetch (fullApiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `${apiToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    if(!reponse.ok){
+      console.error(`Response status: ${reponse.status} ${reponse.statusText}`);
+      console.error('Response body:', await reponse.text());
+      throw new Error('Network response was not ok');
+    }
+    const data = await reponse.json();
+    console.log('Live matches data:', data.data);
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+
+}

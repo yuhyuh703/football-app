@@ -341,3 +341,70 @@ export interface Venue {
   surface: string; // Surface type (e.g., "grass")
   zipcode: string; // Zip code of the venue
 }
+
+export interface LiveMatches extends Match {
+  league: LiveLeague; // League object
+  scores: Scores[]; // Array of scores (if available)
+  Events: Event[]; // Array of events (if available)
+  periods: Period[]; // Array of periods (if available)
+}
+
+
+export type LiveLeague = Omit<League, 'today'> & {
+  country: Country
+};
+
+export interface Country {
+  id: number; // Country ID
+  continent_id: number; // Continent ID
+  name: string; // Country name
+  official_name: string; // Official name of the country
+  fifa_name: string; // FIFA name of the country
+  iso2: string; // ISO 3166-1 alpha-2 code
+  iso3: string; // ISO 3166-1 alpha-3 code
+  latitude: string; // Latitude of the country
+  longitude: string; // Longitude of the country
+  borders: string[]; // Array of bordering countries
+  image_path: string; // URL to the country's image
+}
+
+export interface Event {
+  id: number; // Event ID
+  fixture_id: number; // Fixture ID
+  period_id: number; // Period ID
+  participant_id: number; // Participant ID
+  type_id: number; // Type ID of the event
+  section: string; // Section of the event (e.g., "event")
+  player_id: number; // Player ID involved in the event
+  related_player_id: number | null; // Related player ID (nullable)
+  player_name: string; // Name of the player involved in the event
+  related_player_name: string | null; // Name of the related player (nullable)
+  result: string | null; // Result of the event (nullable)
+  info: string | null; // Additional information about the event (nullable)
+  addition: string | null; // Additional information about the event (nullable)
+  minute: number; // Minute of the event
+  extra_minute: number | null; // Extra minute of the event (nullable)
+  injured: boolean | null; // Indicates if the player was injured (nullable)
+  on_bench: boolean | null; // Indicates if the player was on the bench (nullable)
+  coach_id: number | null; // Coach ID (nullable)
+  sub_type_id: number | null; // Subtype ID of the event (nullable)
+  detailed_period_id: number | null; // Detailed period ID (nullable)
+  sort_order: number | null; // Sort order of the event (nullable)
+  type: Type; // Type object of the event
+}
+
+
+export interface Period {
+  id: number; // Period ID
+  fixture_id: number; // Fixture ID
+  type_id: number; // Type ID of the period
+  started: number; // Start time of the period as a Unix timestamp
+  ended: number; // End time of the period as a Unix timestamp
+  ticking: boolean; // Indicates if the period is currently ticking
+  sort_order: number; // Sort order of the period
+  description: string; // Description of the period (e.g., "1st half")
+  time_added: number; // Time added to the period
+  minutes: number; // Minutes of the period
+  seconds: number; // Seconds of the period
+  has_timer: boolean; // Indicates if the period has a timer
+}

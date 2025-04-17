@@ -1,13 +1,10 @@
-import axios from 'axios';
 import { SelectedDate } from '../types/types';
 import Constants from 'expo-constants';
-import { Match, League } from '../types/types';
-import { useState } from 'react';
 
 const apiUrl = Constants.expoConfig?.extra?.API_URL;
 const apiToken = Constants.expoConfig?.extra?.API_TOKEN;
 
-export async function fetchMatchesByDate(selectedDate: SelectedDate): Promise<League[]> {
+export async function fetchMatchesByDate(selectedDate: SelectedDate) {
 
   const fullApiUrl = `${apiUrl}/leagues/date/${selectedDate.dateString}?include=today.scores;today.participants;today.stage;today.group;today.round;today.state`;
 
@@ -31,7 +28,7 @@ export async function fetchMatchesByDate(selectedDate: SelectedDate): Promise<Le
   }
 }
 
-export async function fetchLeagueStandings(seasonID: number): Promise<unknown> {
+export async function fetchLeagueStandings(seasonID: number){
 
     const fullApiUrl = `${apiUrl}/standings/seasons/${seasonID}?include=participant;rule.type;details.type;form;stage;league;group`;
     try{
@@ -57,7 +54,7 @@ export async function fetchLeagueStandings(seasonID: number): Promise<unknown> {
 
 }
 
-export async function fetchTopScorers(seasonID: number): Promise<unknown> {
+export async function fetchTopScorers(seasonID: number){
 
   const fullApiUrl = `https://api.sportmonks.com/v3/football/topscorers/seasons/${seasonID}?include=player.nationality;player.position;participant;type;season.league&filters=seasontopscorerTypes:208`
   
@@ -186,5 +183,30 @@ export async function fetchLiveMatches() {
     console.error('Error fetching data:', error);
     throw error;
   }
+
+}
+
+export async function fetchTransfersLatest(){
+  const fullApiUrl = `${apiUrl}/transfers/latest?include=player;fromTeam;toTeam;type;`
+  try{
+    const reponse = await fetch (fullApiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `${apiToken}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    if(!reponse.ok){
+      console.error(`Response status: ${reponse.status} ${reponse.statusText}`);
+      console.error('Response body:', await reponse.text());
+      throw new Error('Network response was not ok');
+    }
+    const data = await reponse.json();
+    console.log('Transfers latest data:', data.data);
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  } 
 
 }

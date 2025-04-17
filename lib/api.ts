@@ -9,7 +9,7 @@ const apiToken = Constants.expoConfig?.extra?.API_TOKEN;
 
 export async function fetchMatchesByDate(selectedDate: SelectedDate): Promise<League[]> {
 
-  const fullApiUrl = `${apiUrl}/leagues/date/${selectedDate.dateString}?include=today.scores;today.participants;today.stage;today.group;today.round`;
+  const fullApiUrl = `${apiUrl}/leagues/date/${selectedDate.dateString}?include=today.scores;today.participants;today.stage;today.group;today.round;today.state`;
 
   try {
     const response = await fetch(fullApiUrl, {

@@ -11,11 +11,18 @@ export default function MatchCard({ match }: { match: Match }) {
         { home: 0, away: 0 }
     );
 
-    function getScore(match: Match, team: string) {
+    const  getScore = (match: Match, team: string) => {
       return match.scores.find(
-        (score) => score.description === 'CURRENT' && score.score.participant === team
+        (score) => score.type_id === 1525  && score.score.participant === team
       )?.score?.goals ?? 0;
     }
+
+    const shouldDisplayScore = (stateID: number) => {
+      const displayableStates = [2, 3, 4, 5, 6, 7, 8, 9];
+      return displayableStates.includes(stateID);
+    }
+
+
 
     const handleMatchPress = () => {
       console.log('routerinf to ', `/match/${match.id}`, ', passing: ', match.id);
@@ -37,10 +44,15 @@ export default function MatchCard({ match }: { match: Match }) {
 
     <Card style={styles.card}>
        <TouchableOpacity onPress={handleMatchPress}>
-      <Card.Title title={match.name} subtitle={`Kickoff: ${match.starting_at}`} />
-      <Card.Content>
+        <Card.Title
+        title={match.name}
+        subtitle={`Kickoff: ${new Date(match.starting_at).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        })}`}
+      /><Card.Content>
       <Text style={styles.score}>
-        {match.round.is_current ? `${scores.home} : ${scores.away}` : ''}
+        {shouldDisplayScore(match.state.id) ? `${match.state.name} ${scores.home} : ${scores.away}` : ``}
       </Text>
       </Card.Content>
       </TouchableOpacity>

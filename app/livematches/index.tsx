@@ -2,11 +2,11 @@ import { Text } from 'react-native'
 import { fetchLiveMatches } from '@/lib/api'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { LiveMatches } from '@/types/types';
+import { LiveMatchesType } from '@/types/types';
 
 
 export default function LiveMatches() {
-    const [data, setData] = useState<LiveMatches[]>([])
+    const [data, setData] = useState<LiveMatchesType[]>([])
     useEffect(() => {
         
         const fetchLiveMatchesData = async () => {

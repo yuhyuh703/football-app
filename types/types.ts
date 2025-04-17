@@ -40,6 +40,7 @@ export interface Match {
   scores: Scores[]; // Array of scores (if available)
   round: Round; // Round information
   stage: Stage; // Stage information
+  state: State; // State information
 }
 
 export interface Participant {
@@ -97,11 +98,13 @@ export interface Fixture {
   placeholder: boolean; // Indicates if this is a placeholder match
   result_info: string | null; // Additional result information (nullable)
   round_id: number; // Round ID
+  scores: Scores[]; // Array of scores (if available)
   season_id: number; // Season ID
   sport_id: number; // Sport ID
   stage_id: number; // Stage ID
   starting_at: string; // Match start time (YYYY-MM-DD HH:mm:ss)
   starting_at_timestamp: number; // Match start time as a Unix timestamp
+  state: State; // State object
   state_id: number; // State ID
   venue_id: number; // Venue ID
   venue: Venue; // Venue object
@@ -119,6 +122,14 @@ export interface Stage {
   is_current: boolean; // Indicates if this is the current stage
   starting_at: string; // Stage start date
   ending_at: string; // Stage end date
+}
+
+export interface State {
+  developer_name: string; // Developer name of the state
+  id: number; // State ID
+  name: string; // State name (e.g., "FT")
+  short_name: string; // Short name of the state (e.g., "FT")
+  state: string; // State code (e.g., "FT")
 }
 
 export interface Transfer {
@@ -342,7 +353,7 @@ export interface Venue {
   zipcode: string; // Zip code of the venue
 }
 
-export interface LiveMatches extends Match {
+export interface LiveMatchesType extends Match {
   league: LiveLeague; // League object
   scores: Scores[]; // Array of scores (if available)
   Events: Event[]; // Array of events (if available)

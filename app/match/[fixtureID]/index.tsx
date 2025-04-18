@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { fetchMatchInfo } from '@/lib/api';
 import { Fixture } from '@/types/types';
+import { Stack } from 'expo-router';
 
 
 
@@ -47,16 +48,17 @@ export default function FixtureInfo() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>{fixtureInfo.name}</Text>
-            <Text>Starting at: {fixtureInfo.starting_at}</Text>
-            <Text>Venue: {fixtureInfo.venue?.name}</Text>
-            <Text>{fixtureInfo.result_info}</Text>
-            <Text>
-                {shouldDisplayScore(fixtureInfo.state?.id) ? `${fixtureInfo.state.name} ${scores.home} : ${scores.away}` : `${fixtureInfo.state?.name}`}
-            </Text>
+        <Stack.Screen options={{ title: '',  headerBackTitle:'Back'}} />
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text>{fixtureInfo.name}</Text>
+                <Text>Starting at: {fixtureInfo.starting_at}</Text>
+                <Text>Venue: {fixtureInfo.venue?.name}</Text>
+                <Text>{fixtureInfo.result_info}</Text>
+                <Text>
+                    {shouldDisplayScore(fixtureInfo.state?.id) ? `${fixtureInfo.state.name} ${scores.home} : ${scores.away}` : `${fixtureInfo.state?.name}`}
+                </Text>
 
-        </View>
+            </View>
         </SafeAreaView>
     );
 }

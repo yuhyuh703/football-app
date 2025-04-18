@@ -1,79 +1,125 @@
-import { View, StyleSheet } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { View, StyleSheet, Image } from 'react-native';
+import { Text } from 'react-native-paper';
 import { Match } from '@/types/types';
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
 export default function MatchCard({ match }: { match: Match }) {
-    const [scores, setScores] = useState<{ home: number; away: number }>(
-        { home: 0, away: 0 }
-    );
+  const [scores, setScores] = useState({ home: 0, away: 0 });
 
-    const  getScore = (match: Match, team: string) => {
-      return match.scores.find(
-        (score) => score.type_id === 1525  && score.score.participant === team
-      )?.score?.goals ?? 0;
-    }
+  const getScore = (team: string) =>
+    match.scores.find(
+      (score) => score.type_id === 1525 && score.score.participant === team
+    )?.score?.goals ?? 0;
 
-    const shouldDisplayScore = (stateID: number) => {
-      const displayableStates = [2, 3, 4, 5, 6, 7, 8, 9];
-      return displayableStates.includes(stateID);
-    }
+  const shouldDisplayScore = (stateID: number) => {
+    const displayableStates = [2, 3, 4, 5, 6, 7, 8, 9];
+    return displayableStates.includes(stateID);
+  };
 
+  const handleMatchPress = () => {
+    router.push({
+      pathname: "/match/[fixtureID]",
+      params: { fixtureID: match.id }
+    });
+  };
 
+  useEffect(() => {
+    setScores({
+      home: getScore('home'),
+      away: getScore('away')
+    });
+  }, [match]);
 
-    const handleMatchPress = () => {
-      console.log('routerinf to ', `/match/${match.id}`, ', passing: ', match.id);
-      router.push({
-        pathname: "/match/[fixtureID]",
-        params: { fixtureID: match.id }
-      });
-      
-    }
-
-    
-
-    useEffect(() => {
-        setScores({ home: getScore(match, 'home'), away: getScore(match, 'away') });
-    
-       }, [match]);
+  const kickoff = new Date(match.starting_at).toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   return (
+    <TouchableOpacity onPress={handleMatchPress}>
+      <View style={styles.cardRow}>
 
-    <Card style={styles.card}>
-       <TouchableOpacity onPress={handleMatchPress}>
-        <Card.Title
-        title={match.name}
-        subtitle={`Kickoff: ${new Date(match.starting_at).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-        })}`}
-      /><Card.Content>
-      <Text style={styles.score}>
-        {shouldDisplayScore(match.state.id) ? `${match.state.name} ${scores.home} : ${scores.away}` : ``}
-      </Text>
-      </Card.Content>
-      </TouchableOpacity>
-    </Card>
+        <View style={styles.teamContainer}>
+          <Image source={{ uri: match.participants[0]?.image_path }} style={styles.flag} />
+          <Text style={styles.teamName}>{match.participants[0]?.name}</Text>
+        </View>
+
+
+        <View style={styles.centerContent}>
+          {shouldDisplayScore(match.state.id) ? (
+            <>
+              <Text style={styles.stateText}>{match.state.name}</Text>
+              <Text style={styles.scoreText}>
+                {scores.home ?? 0} - {scores.away ?? 0} {/* Fallback to 0 if undefined */}
+              </Text>
+            </>
+          ) : (
+            <Text style={styles.kickoffText}>{kickoff}</Text>
+          )}
+        </View>
+
+        <View style={styles.teamContainerRight}>
+          <Text style={styles.teamName}>{match.participants[1]?.name}</Text>
+          <Image source={{ uri: match.participants[1]?.image_path }} style={styles.flag} />
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 
+
 const styles = StyleSheet.create({
-  card: {
-    marginVertical: 6,
-    backgroundColor: '#fff',
-    elevation: 2,
+  cardRow: {
+    flexDirection: 'row',
+    backgroundColor: '#f8f9fa',
     borderRadius: 8,
-    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 6,
+    elevation: 2,
   },
-  teams: {
-    fontSize: 16,
+  teamContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flex: 1.5,
+  },
+  teamContainerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flex: 1.5,
+    justifyContent: 'flex-end',
+  },
+  flag: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+  },
+  teamName: {
+    fontSize: 14,
     fontWeight: '600',
+    flexShrink: 1,
   },
-  score: {
+  centerContent: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  scoreText: {
     fontSize: 16,
-    justifyContent: 'center',
+    fontWeight: 'bold',
+  },
+  stateText: {
+    fontSize: 12,
+    color: '#888',
+    marginBottom: 2,
+  },
+  kickoffText: {
+    fontSize: 14,
+    color: '#555',
   },
 });

@@ -11,6 +11,7 @@ import MatchList from "@/components/Match/MatchList";
 import { fetchMatchesByDate } from "@/lib/api";
 import { router } from "expo-router";
 
+
 export default function Matches() {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(
     {
@@ -52,22 +53,15 @@ export default function Matches() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <IconButton
-          icon= 'access-point'
-          onPress={handelLiveMatchesPress}
-          />
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{ margin: 20 }}>
-            {selectedDate.dateString === new Date().toISOString().split('T')[0] ? 'Today' : selectedDate.dateString}
-            </Text>
-            <IconButton
-            onPress={() => {bottomSheetRef.current?.snapToIndex(0)}}
-            icon="calendar"
-            />
-          </View>
-          
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <IconButton icon="access-point" onPress={handelLiveMatchesPress} size={32} style={styles.iconButton} />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ fontSize: 15, fontWeight: '500' }}>
+          {selectedDate.dateString === new Date().toISOString().split('T')[0] ? 'Today' : selectedDate.dateString}
+          </Text>
+          <IconButton icon="calendar" onPress={() => bottomSheetRef.current?.snapToIndex(0)} size={32} style={styles.iconButton}/>
         </View>
+      </View>
         <View style={{ padding: 10 }}>
           <MatchList matches={matches} />
         </View>
@@ -79,7 +73,7 @@ export default function Matches() {
           backgroundStyle={{ backgroundColor: '#f8f9fa' }}
           
         >
-          <BottomSheetView style={styles.contentContainer}>
+          <BottomSheetView style={styles.contentContainer} >
             <Calendar style={{ width : '100%' }}  
               onDayPress={async (day: SelectedDate) => {
                 bottomSheetRef.current?.close();
@@ -127,9 +121,13 @@ export default function Matches() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f8f9fa',
   },
   contentContainer: {
     flex: 1,
   },
+  iconButton: {
+    margin: 10,
+
+  }
 });

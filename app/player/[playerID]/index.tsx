@@ -3,6 +3,7 @@ import { SafeAreaView, Text } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import {fetchPlayerByID} from '@/lib/api';
 import { PlayerDetails } from '@/types/types';
+import { Stack } from 'expo-router';
 
 
 export default function PlayerOverView() {
@@ -28,6 +29,7 @@ export default function PlayerOverView() {
     }, [])
     return(
         <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Stack.Screen options={{ title: '',  headerBackTitle:'Back'}} />
             <Text>{playerInfo.common_name}</Text>
         </SafeAreaView>
     )

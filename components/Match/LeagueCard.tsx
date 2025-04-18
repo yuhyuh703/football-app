@@ -1,5 +1,5 @@
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, Text } from 'react-native-paper';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-paper';
 import MatchCard from './MatchCard';
 import { League } from '@/types/types';
 import { router } from 'expo-router';
@@ -17,23 +17,62 @@ export default function LeagueCard({ league }: { league: League }) {
   };
 
   return (
-    <Card style={styles.card}>
-      <TouchableOpacity onPress={handleLeaguePress}>
-        <Card.Title title={league.name} subtitle={`Round: ${league.today[0].round.name}`} />
+    <View style={styles.card}>
+      {/* Header */}
+      <TouchableOpacity style={styles.header} onPress={handleLeaguePress}>
+        <Image source={{ uri: league.image_path }} style={styles.logo} />
+        <View style={styles.leagueInfo}>
+          <Text style={styles.leagueName}>{league.name}</Text>
+          <Text style={styles.roundText}> - Round {league.today[0]?.round?.name}</Text>
+        </View>
       </TouchableOpacity>
-      <Card.Content>
+
+      {/* Matches */}
+      <View style={styles.content}>
         {league.today.map((match, idx) => (
           <MatchCard match={match} key={idx} />
         ))}
-      </Card.Content>
-    </Card>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     marginBottom: 20,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 0
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    overflow: 'hidden',
+    elevation: 2,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    backgroundColor: '#f3f3f3',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  logo: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    marginRight: 12,
+  },
+  leagueInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  leagueName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  roundText: {
+    fontSize: 13,
+    color: '#666',
+  },
+  content: {
+    padding: 8,
   },
 });

@@ -170,6 +170,26 @@ export interface StandingTeam {
   sport_id: number; // Sport ID
   stage_id: number; // Stage ID
   standing_rule_id: number; // Standing rule ID
+  details: Details[]; // Array of details
+  rule: Rule; // Rule object
+}
+export interface Details {
+  id: number; // Detail ID
+  standing_id: number; // Standing ID
+  standing_type: string; // Type of standing (e.g., "standing")
+  type: Type; // Type object
+  type_id: number; // Type ID
+  value: number; // Value of the detail (e.g., goals scored)
+}
+
+export interface Rule {
+  id: number; // Rule ID
+  model_id: number; // Model ID
+  model_type: string; // Model type (e.g., "stage")
+  position: number; // Position in the standings
+  type: Type; // Type object
+  type_id: number; // Type ID
+
 }
 
 export interface TopScorer {

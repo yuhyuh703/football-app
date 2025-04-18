@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   segmented: {
     marginTop: 10,
     marginHorizontal: 12,
-    borderBottomColor: '#0000',
+    borderRadius: 0,
   },
   content: {
     flex: 1,

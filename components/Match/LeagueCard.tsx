@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 32,
     height: 32,
-    borderRadius: 16,
     marginRight: 12,
   },
   leagueInfo: {

@@ -14,7 +14,7 @@ export default function MatchCard({ match }: { match: Match }) {
     )?.score?.goals ?? 0;
 
   const shouldDisplayScore = (stateID: number) => {
-    const displayableStates = [2, 3, 4, 5, 6, 7, 8, 9];
+    const displayableStates = [2, 3, 4, 5, 6, 7, 8, 9, 22];
     return displayableStates.includes(stateID);
   };
 
@@ -52,7 +52,7 @@ export default function MatchCard({ match }: { match: Match }) {
             <>
               <Text style={styles.stateText}>{match.state.name}</Text>
               <Text style={styles.scoreText}>
-                {scores.home ?? 0} - {scores.away ?? 0} {/* Fallback to 0 if undefined */}
+                {scores.home ?? 0} - {scores.away ?? 0}
               </Text>
             </>
           ) : (
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   flag: {
     width: 24,
     height: 24,
-    borderRadius: 12,
   },
   teamName: {
     fontSize: 14,

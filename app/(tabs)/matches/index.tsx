@@ -1,16 +1,15 @@
-import { View, Pressable, SectionList, StyleSheet } from "react-native";
-import { List, Card, Divider, Text, Button, IconButton } from "react-native-paper";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { View, StyleSheet } from "react-native";
+import { Text, IconButton } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { useEffect, useState,  useCallback, useMemo, useRef  } from "react";
-import { League, Match, SelectedDate } from "../../../types/types";
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import Constants from 'expo-constants';
-import MatchList from "@/components/Match/MatchList";
-import { fetchMatchesByDate } from "@/lib/api";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { Calendar } from "react-native-calendars";
 import { router } from "expo-router";
 
+import MatchList from "@/components/Match/MatchList";
+import { fetchMatchesByDate } from "@/lib/api";
+import { League, SelectedDate } from "../../../types/types";
 
 export default function Matches() {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(
@@ -21,97 +20,108 @@ export default function Matches() {
       year: new Date().getFullYear(),
     } as SelectedDate
   );
+
   const [matches, setMatches] = useState<League[]>([]);
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
   useEffect(() => {
     const loadMatches = async () => {
       try {
         const data = await fetchMatchesByDate(selectedDate);
         setMatches(data);
-        console.log('Matches data:', data);
+        console.log("Matches data:", data);
       } catch (error) {
         console.error("Error loading matches:", error);
       }
     };
-  
+
     loadMatches();
   }, [selectedDate]);
 
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
   const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+    console.log("handleSheetChanges", index);
   }, []);
 
-  const handelLiveMatchesPress = () => {
-    router.push('/livematches')
-  }
+  const handleLiveMatchesPress = () => {
+    router.push("/livematches");
+  };
 
-  
- 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <IconButton icon="access-point" onPress={handelLiveMatchesPress} size={32} style={styles.iconButton} />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ fontSize: 15, fontWeight: '500' }}>
-          {selectedDate.dateString === new Date().toISOString().split('T')[0] ? 'Today' : selectedDate.dateString}
-          </Text>
-          <IconButton icon="calendar" onPress={() => bottomSheetRef.current?.snapToIndex(0)} size={32} style={styles.iconButton}/>
-        </View>
-      </View>
-        <View style={{ padding: 10 }}>
-          <MatchList matches={matches} />
-        </View>
-        <BottomSheet
-          ref={bottomSheetRef}
-          snapPoints={['25%', '50%', '90%']}
-          onChange={handleSheetChanges}
-          index={-1}
-          backgroundStyle={{ backgroundColor: '#f8f9fa' }}
-          
-        >
-          <BottomSheetView style={styles.contentContainer} >
-            <Calendar style={{ width : '100%' }}  
-              onDayPress={async (day: SelectedDate) => {
-                bottomSheetRef.current?.close();
-                console.log(day, 'pressed')
-                setSelectedDate(day);
-                
-              }}
-              markedDates={{
-                [selectedDate.dateString]: {
-                  selected: true,
-                  selectedColor: '#4CAF50', // Background color for the selected date
-                  selectedTextColor: '#ffffff', // Text color for the selected date
-                },
-              }}
-              theme={{
-              backgroundColor: '#f8f9fa', // Background color of the calendar
-              calendarBackground: '#f8f9fa', // Background color of the calendar container
-              textSectionTitleColor: '#b6c1cd', // Color of month and day titles
-              selectedDayBackgroundColor: '#4CAF50', // Background color of the selected day
-              selectedDayTextColor: '#ffffff', // Text color of the selected day
-              todayTextColor: '#FF5722', // Text color of today's date
-              dayTextColor: '#2d4150', // Default text color for days
-              dotColor: '#00adf5', // Dot color for marked dates
-              selectedDotColor: '#ffffff', // Dot color for marked dates on the selected day
-              arrowColor: '#4CAF50', // Color of the navigation arrows
-              monthTextColor: '#4CAF50', // Text color for the month title
-              indicatorColor: '#4CAF50', // Indicator color for loading
-              textDayFontWeight: '300', // Font weight for day numbers
-              textMonthFontWeight: 'bold', // Font weight for the month title
-              textDayHeaderFontWeight: '300', // Font weight for day headers (e.g., Mon, Tue)
-              textDayFontSize: 16, // Font size for day numbers
-              textMonthFontSize: 18, // Font size for the month title
-              textDayHeaderFontSize: 14, // Font size for day headers
-            }}
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
+            <IconButton
+              icon="access-point"
+              onPress={handleLiveMatchesPress}
+              size={32}
+              style={styles.iconButton}
             />
-          </BottomSheetView>
-        </BottomSheet>
-      </SafeAreaView>
+            <View style={styles.dateRow}>
+              <Text style={styles.dateText}>
+                {selectedDate.dateString === new Date().toISOString().split("T")[0]
+                  ? "Today"
+                  : selectedDate.dateString}
+              </Text>
+              <IconButton
+                icon="calendar"
+                onPress={() => bottomSheetRef.current?.snapToIndex(0)}
+                size={32}
+                style={styles.iconButton}
+              />
+            </View>
+          </View>
+
+          <View style={styles.matchListWrapper}>
+            <MatchList matches={matches} />
+          </View>
+
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={["25%", "50%", "90%"]}
+            onChange={handleSheetChanges}
+            index={-1}
+            backgroundStyle={styles.bottomSheetBackground}
+          >
+            <BottomSheetView style={styles.contentContainer}>
+              <Calendar
+                onDayPress={(day: SelectedDate) => {
+                  bottomSheetRef.current?.close();
+                  console.log(day, "pressed");
+                  setSelectedDate(day);
+                }}
+                markedDates={{
+                  [selectedDate.dateString]: {
+                    selected: true,
+                    selectedColor: "#4CAF50",
+                    selectedTextColor: "#ffffff",
+                  },
+                }}
+                style={styles.calendar}
+                theme={{
+                  backgroundColor: "#f8f9fa",
+                  calendarBackground: "#f8f9fa",
+                  textSectionTitleColor: "#b6c1cd",
+                  selectedDayBackgroundColor: "#4CAF50",
+                  selectedDayTextColor: "#ffffff",
+                  todayTextColor: "#FF5722",
+                  dayTextColor: "#2d4150",
+                  dotColor: "#00adf5",
+                  selectedDotColor: "#ffffff",
+                  arrowColor: "#4CAF50",
+                  monthTextColor: "#4CAF50",
+                  indicatorColor: "#4CAF50",
+                  textDayFontWeight: "300",
+                  textMonthFontWeight: "bold",
+                  textDayHeaderFontWeight: "300",
+                  textDayFontSize: 16,
+                  textMonthFontSize: 18,
+                  textDayHeaderFontSize: 14,
+                }}
+              />
+            </BottomSheetView>
+          </BottomSheet>
+        </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
@@ -120,12 +130,36 @@ export default function Matches() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: "#f8f9fa",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 4,
+    borderBottomColor: "#e0e0e0",
+  },
+  iconButton: {
+    margin: 10,
+  },
+  dateRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  dateText: {
+    fontSize: 15,
+    fontWeight: "500",
+  },
+  matchListWrapper: {
+    padding: 5,
   },
   contentContainer: {
     flex: 1,
   },
-  iconButton: {
-    margin: 10,
-  }
+  calendar: {
+    width: "100%",
+  },
+  bottomSheetBackground: {
+    backgroundColor: "#f8f9fa",
+  },
 });

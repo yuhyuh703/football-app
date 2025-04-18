@@ -1,50 +1,95 @@
 import { useLocalSearchParams, Stack } from 'expo-router';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Standings from '@/components/League/Standings/Standings';
 import TopScorers from '@/components/League/TopScorers/TopScorers';
 import { useState } from 'react';
 import { SegmentedButtons } from 'react-native-paper';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { Image } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
 
 export default function League() {
   const { leagueName, image_path } = useLocalSearchParams();
   const [selectedTab, setSelectedTab] = useState('standings');
+  const navigation = useNavigation();
 
   return (
-<SafeAreaProvider>
-      <Stack.Screen options={{ title: '',  headerBackTitle:'Back'}} />
-      
-        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+    
+    <SafeAreaView style={styles.safeArea}>
+      <Stack.Screen options={{ headerShown: false }} />
+      {/* Custom Header */}
+
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="chevron-back" size={28} color="#000" />
+        </TouchableOpacity>
+
+        <View style={styles.logoAndName}>
           <Image
             source={{ uri: image_path as string }}
-            style={{ width: 50, height: 50, borderRadius: 25, marginRight: 10 }}
+            style={styles.logo}
           />
-          
-          <Text style={{ fontSize: 24 }}>{leagueName}</Text>
+          <Text style={styles.leagueName}>{leagueName}</Text>
         </View>
-        <SafeAreaView style={styles.container}>
-            <SegmentedButtons
-            value={selectedTab}
-            onValueChange={setSelectedTab}
-            buttons={[
-                { value: 'standings', label: 'Standings' },
-                { value: 'topscorers', label: 'Top Scorers' },
-            ]}
-            />
-            {selectedTab === 'standings' && <Standings />}
-            {selectedTab === 'topscorers' && <TopScorers />}
-        </SafeAreaView>
-      </SafeAreaProvider>
-    
+      </View>
+
+      {/* Tabs */}
+      <SegmentedButtons
+        value={selectedTab}
+        onValueChange={setSelectedTab}
+        buttons={[
+          { value: 'standings', label: 'Standings' },
+          { value: 'topscorers', label: 'Top Scorers' },
+        ]}
+        style={styles.segmented}
+        
+      />
+
+      {/* Content */}
+      <View style={styles.content}>
+        {selectedTab === 'standings' && <Standings />}
+        {selectedTab === 'topscorers' && <TopScorers />}
+      </View>
+    </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    justifyContent: 'center',
-    
+    backgroundColor: '#f3f3f3',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 20,
+    backgroundColor: '#f3f3f3',
+  },
+  backButton: {
+    marginRight: 8,
+  },
+  logoAndName: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginRight: 10,
+  },
+  leagueName: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  segmented: {
+    marginTop: 10,
+    marginHorizontal: 12,
+    borderBottomColor: '#0000',
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 12,
+    paddingTop: 10,
   },
 });

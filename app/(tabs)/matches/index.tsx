@@ -108,7 +108,6 @@ export default function Matches() {
               textMonthFontSize: 18, // Font size for the month title
               textDayHeaderFontSize: 14, // Font size for day headers
             }}
-              
             />
           </BottomSheetView>
         </BottomSheet>
@@ -128,6 +127,5 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     margin: 10,
-
   }
 });

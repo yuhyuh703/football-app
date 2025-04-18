@@ -3,6 +3,7 @@ import { Text } from 'react-native-paper';
 import MatchCard from './MatchCard';
 import { League } from '@/types/types';
 import { router } from 'expo-router';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LeagueCard({ league }: { league: League }) {
   const handleLeaguePress = () => {
@@ -17,7 +18,9 @@ export default function LeagueCard({ league }: { league: League }) {
   };
 
   return (
-    <View style={styles.card}>
+    <SafeAreaProvider>
+      <SafeAreaView>
+      <View style={styles.card}>
       {/* Header */}
       <TouchableOpacity style={styles.header} onPress={handleLeaguePress}>
         <Image source={{ uri: league.image_path }} style={styles.logo} />
@@ -34,16 +37,21 @@ export default function LeagueCard({ league }: { league: League }) {
         ))}
       </View>
     </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
+    
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     marginBottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f8f9fa',
     borderRadius: 8,
     overflow: 'hidden',
     elevation: 2,
+    borderWidth: 2,
+    borderColor: '#e0e0e0',
   },
   header: {
     flexDirection: 'row',
@@ -52,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f3f3',
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
+
   },
   logo: {
     width: 32,

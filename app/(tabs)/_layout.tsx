@@ -5,8 +5,12 @@ export default function Layout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#339966", // Color for active tab icons
+        tabBarActiveTintColor: "#404040", // Color for active tab icons
         tabBarInactiveTintColor: "#757575", // Color for inactive tab icons
+        tabBarLabelStyle: {
+          fontSize: 12, // Font size for tab labels
+          fontWeight: "bold", // Font weight for tab labels
+        },
         tabBarStyle: {
           backgroundColor: "#f8f9fa", // Background color of the tab bar
         },

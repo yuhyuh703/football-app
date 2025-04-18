@@ -20,8 +20,8 @@ export default function Matches() {
       year: new Date().getFullYear(),
     } as SelectedDate
   );
-
   const [matches, setMatches] = useState<League[]>([]);
+  const [liveOpen, setLiveOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function Matches() {
   }, []);
 
   const handleLiveMatchesPress = () => {
-    router.push("/livematches");
+    setLiveOpen(true);
   };
 
   return (
@@ -99,24 +99,24 @@ export default function Matches() {
                 }}
                 style={styles.calendar}
                 theme={{
-                  backgroundColor: "#f8f9fa",
-                  calendarBackground: "#f8f9fa",
-                  textSectionTitleColor: "#b6c1cd",
-                  selectedDayBackgroundColor: "#4CAF50",
-                  selectedDayTextColor: "#ffffff",
-                  todayTextColor: "#FF5722",
-                  dayTextColor: "#2d4150",
-                  dotColor: "#00adf5",
-                  selectedDotColor: "#ffffff",
-                  arrowColor: "#4CAF50",
-                  monthTextColor: "#4CAF50",
-                  indicatorColor: "#4CAF50",
-                  textDayFontWeight: "300",
-                  textMonthFontWeight: "bold",
-                  textDayHeaderFontWeight: "300",
-                  textDayFontSize: 16,
-                  textMonthFontSize: 18,
-                  textDayHeaderFontSize: 14,
+                  backgroundColor: "#f8f9fa", // Light grey background
+                  calendarBackground: "#f8f9fa", // Light grey background
+                  textSectionTitleColor: "#b6c1cd", // Neutral grey for section titles
+                  selectedDayBackgroundColor: "#FF5722", // Orange for selected day background
+                  selectedDayTextColor: "#ffffff", // White for selected day text
+                  todayTextColor: "#FF5722", // Orange for today's date
+                  dayTextColor: "#2d4150", // Dark grey for day text
+                  dotColor: "#FF5722", // Orange for dots
+                  selectedDotColor: "#ffffff", // White for selected dots
+                  arrowColor: "#b6c1cd", // Neutral grey for navigation arrows
+                  monthTextColor: "#2d4150", // Dark grey for month text
+                  indicatorColor: "#b6c1cd", // Neutral grey for loading indicator
+                  textDayFontWeight: "300", // Light font weight for day numbers
+                  textMonthFontWeight: "bold", // Bold font weight for month title
+                  textDayHeaderFontWeight: "300", // Light font weight for day headers
+                  textDayFontSize: 16, // Font size for day numbers
+                  textMonthFontSize: 18, // Font size for month title
+                  textDayHeaderFontSize: 14, // Font size for day headers
                 }}
               />
             </BottomSheetView>

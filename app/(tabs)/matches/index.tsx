@@ -6,8 +6,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { Calendar } from "react-native-calendars";
 import { router } from "expo-router";
-
 import MatchList from "@/components/Match/MatchList";
+import LiveMatch from "@/components/LiveMatch/LiveMatch"; 
 import { fetchMatchesByDate } from "@/lib/api";
 import { League, SelectedDate } from "../../../types/types";
 
@@ -43,7 +43,7 @@ export default function Matches() {
   }, []);
 
   const handleLiveMatchesPress = () => {
-    setLiveOpen(true);
+    setLiveOpen((prevState) => !prevState); 
   };
 
   return (
@@ -59,8 +59,10 @@ export default function Matches() {
             />
             <View style={styles.dateRow}>
               <Text style={styles.dateText}>
-                {selectedDate.dateString === new Date().toISOString().split("T")[0]
-                  ? "Today"
+                {liveOpen 
+                  ? "Live" 
+                  : selectedDate.dateString === new Date().toISOString().split("T")[0] 
+                  ? "Today" 
                   : selectedDate.dateString}
               </Text>
               <IconButton
@@ -73,7 +75,7 @@ export default function Matches() {
           </View>
 
           <View style={styles.matchListWrapper}>
-            <MatchList matches={matches} />
+            {liveOpen ? <LiveMatch /> : <MatchList matches={matches} />}
           </View>
 
           <BottomSheet
@@ -89,6 +91,7 @@ export default function Matches() {
                   bottomSheetRef.current?.close();
                   console.log(day, "pressed");
                   setSelectedDate(day);
+                  setLiveOpen(false);
                 }}
                 markedDates={{
                   [selectedDate.dateString]: {

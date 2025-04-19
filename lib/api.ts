@@ -83,7 +83,7 @@ export async function fetchTopScorers(seasonID: number){
 export async function fetchFullParticipantInfo (teamID: number) {
   console.log('Fetching team info for teamID:', teamID);
   //const fullApiUrl = `${apiUrl}/teams/${teamID}`
-  const fullApiUrl = `https://api.sportmonks.com/v3/football/teams/${teamID}?include=latest;upcoming;venue;players.player.nationality;coaches.coach;rankings`;
+  const fullApiUrl = `https://api.sportmonks.com/v3/football/teams/${teamID}?include=upcoming.league;upcoming.participants;upcoming.round;venue;players.player.nationality;players.player.position;coaches.coach;rankings;sidelined.player`;
   try{
     const response = await fetch(fullApiUrl, {
       method: 'GET',

@@ -297,8 +297,23 @@ export interface FullParticipant extends Participant {
   venue: Venue; // Venue object
   players: Player[]; // Array of players in the team
   coaches: Coach[]; // Array of coaches in the team
-
+  sidelined: Sideline[]; // Array of sidelined players
 }
+
+export interface Sideline {
+  category: string; // Category of the sidelined player (e.g., "injury")
+  completed: boolean; // Indicates if the sidelined status is completed
+  end_date: string | null; // End date of the sidelined status (nullable)
+  games_missed: number; // Number of games missed
+  id: number; // Sidelined ID
+  player: PlayerDetails; // Player object
+  player_id: number; // Player ID
+  season_id: number | null; // Season ID (nullable)
+  start_date: string; // Start date of the sidelined status (YYYY-MM-DD)
+  team_id: number; // Team ID
+  type_id: number; // Type ID of the sidelined status
+}
+
 
 export interface Coach {
   active: boolean; // Indicates if the coach is active
@@ -355,6 +370,11 @@ export interface LatestUpcoming {
   starting_at_timestamp: number; // Match start time as a Unix timestamp
   state_id: number; // State ID
   venue_id: number; // Venue ID
+  league: Omit<League, 'today'>  // League object
+  round: Round; // Round object
+  participants: Participant[]; // Array of participants (teams)
+  state: State; // State object
+  scores: Scores[]; // Array of scores (if available)
 }
 
 export interface Venue {

@@ -5,14 +5,13 @@ import { SegmentedButtons } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import {fetchFullParticipantInfo}  from '@/lib/api';
-import ClubInfo from '@/components/Team/ClubInfo';
-import ClubSquad from '@/components/Team/ClubSquad';
+import ClubInfo from '@/components/Team/TeamInfo/ClubInfo';
+import ClubSquad from '@/components/Team/Squad/ClubSquad';
 import { FullParticipant } from '@/types/types';
 import { Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function Team() {
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     logo: {
       width: 36,
       height: 36,
-      borderRadius: 18,
+
       marginRight: 10,
     },
     leagueName: {

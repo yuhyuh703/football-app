@@ -16,6 +16,8 @@ export default function MatchCard({ latestMatch }: { latestMatch: LatestUpcoming
   };
 
   const kickoff = new Date(latestMatch?.starting_at).toLocaleTimeString([], {
+    month: '2-digit',
+    day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -26,7 +28,7 @@ export default function MatchCard({ latestMatch }: { latestMatch: LatestUpcoming
 
         <View style={styles.teamContainer}>
           <Image source={{ uri: latestMatch?.participants[0]?.image_path }} style={styles.flag} />
-          <Text style={styles.teamName}>{latestMatch?.participants[0]?.name}</Text>
+          <Text style={styles.teamName}>{latestMatch?.participants[0]?.short_code}</Text>
         </View>
 
 
@@ -35,7 +37,7 @@ export default function MatchCard({ latestMatch }: { latestMatch: LatestUpcoming
         </View>
 
         <View style={styles.teamContainerRight}>
-          <Text style={styles.teamName}>{latestMatch?.participants[1]?.name}</Text>
+          <Text style={styles.teamName}>{latestMatch?.participants[1]?.short_code}</Text>
           <Image source={{ uri: latestMatch?.participants[1]?.image_path }} style={styles.flag} />
         </View>
       </View>
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   stateText: {
     fontSize: 12,
     color: '#888',
-    marginBottom: 2,
+    marginBottom: 4,
   },
   kickoffText: {
     fontSize: 14,

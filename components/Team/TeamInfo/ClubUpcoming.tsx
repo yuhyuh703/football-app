@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-paper';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import ClubUpcomingMatchCard from '@/components/Team/ClubUpcomingMatchCard';
+import ClubUpcomingMatchCard from '@/components/Team/TeamInfo/ClubUpcomingMatchCard';
 import {router} from 'expo-router';
 
 

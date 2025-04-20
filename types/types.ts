@@ -227,7 +227,64 @@ export interface PlayerDetails {
   sport_id: number; // Sport ID
   type_id: number; // Type ID
   image_path: string; // URL to the player's image
+  statistics: PLayerStatistics[]; // Array of player statistics
+  metadata?: MetaData[]
+  teams?: Teams[]
 }
+
+export interface Teams {
+  captain: boolean; // Indicates if the player is a captain
+  detailed_position_id: number; // Detailed position ID
+  end: string; // End date of the contract (YYYY-MM-DD)
+  id: number; // Player ID
+  jersey_number: number; // Jersey number of the player
+  player_id: number; // Player ID
+  position_id: number; // Position ID
+  start: string; // Start date of the contract (YYYY-MM-DD)
+  team_id: number; // Team ID
+  transfer_id: number | null; // Transfer ID (nullable)
+  team: Team; // Team object
+}
+
+export interface Team {
+  country_id: number; // Country ID
+  founded: number; // Year the team was founded
+  gender: string; 
+  id: number; // Team ID
+  image_path: string; // URL to the team's image
+  last_played_at: string; // Last played date and time (YYYY-MM-DD HH:mm:ss)
+  name: string; // Team name (e.g., "Liverpool")
+  placeholder: boolean; // Indicates if this is a placeholder team
+  short_code: string; // Short code for the team (e.g., "LIV")
+  sport_id: number; // Sport ID
+  type: string; // Type of the team (e.g., "domestic")
+  venue_id: number; // Venue ID
+}
+
+export interface MetaData {
+  id: number; // Metadata ID
+  metadatable_id: number; // Metadata table ID
+  type: Type; // Type object
+  type_id: number; // Type ID
+  value_type: string; // Type of value (e.g., "string")
+  values: string; // Values associated with the metadata
+}
+
+
+export interface PLayerStatistics {
+  details: Details[]; // Array of details
+  has_values: boolean; // Indicates if the statistics have values
+  id: number; // Statistics ID
+  jersey_number: number; // Jersey number of the player
+  player_id: number; // Player ID
+  position_id: number; // Position ID
+  season: Season; // Season object
+  season_id: number; // Season ID
+  team_id: number; // Team ID
+
+}
+
+
 
 export interface Player {
   captain: boolean; // Indicates if the player is a captain

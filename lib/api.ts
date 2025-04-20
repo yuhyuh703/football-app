@@ -110,7 +110,7 @@ export async function fetchFullParticipantInfo (teamID: number) {
 export async function fetchPlayerByID(playerID: number){
   console.log('Fetching player info for playerID:', playerID);
 
-  const fullApiUrl = `https://api.sportmonks.com/v3/football/players/${playerID}?include=nationality`
+  const fullApiUrl = `https://api.sportmonks.com/v3/football/players/${playerID}?include=nationality;position;transfers;lineups;trophies.trophy;metadata.type;statistics.details.type;statistics.season;teams.team`
   
   try{
     const response = await fetch(fullApiUrl, {

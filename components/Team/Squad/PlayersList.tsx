@@ -6,6 +6,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 
 export default function PlayersList({ players }: { players: Record<number, Player[]> }) {
+    const handlePressPLayer = (playerID: number) => {
+      router.push({
+        pathname: '/player/[playerID]',
+        params: { playerID },
+      })
+    }
+    console.log("players:", players);
   return (
     <View style={styles.container}>
       <FlatList
@@ -21,7 +28,7 @@ export default function PlayersList({ players }: { players: Record<number, Playe
               {playerList.map((player) => (
                 <TouchableOpacity
                   key={player.id}
-                  onPress={() => router.push(`/player/${player.id}`)}
+                  onPress={() => handlePressPLayer(player.player_id)}
                 >
                   <View style={styles.playerRow}>
                     <Image

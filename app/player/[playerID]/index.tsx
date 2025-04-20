@@ -30,7 +30,7 @@ export default function PlayerOverView() {
     return(
         <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <Stack.Screen options={{ title: '',  headerBackTitle:'Back'}} />
-            <Text>{playerInfo.common_name}</Text>
+            <Text>{playerInfo?.common_name}</Text>
         </SafeAreaView>
     )
 }

@@ -1,54 +1,47 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { FullParticipant } from '@/types/types';
-import { FlatList } from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import { FullParticipant, Player } from '@/types/types';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { router } from 'expo-router';
-
+import PlayersList from './PlayersList';
 
 interface ClubSquadProps {
-    squad: FullParticipant | null;
+  squad: FullParticipant | null;
 }
 
-export default function ClubSquad({squad}: ClubSquadProps) {
-console.log("ClubSquad in clubsquad file", squad);
+export default function ClubSquad({ squad }: ClubSquadProps) {
+  if (!squad) return null;
 
-const handlePlayerPress = (playerID: number, playerName: string) => {
-    console.log('Player ID in club squad:', playerID, 'type:', typeof playerID);
-    console.log('Player Name:', playerName);
-    
-    router.push(`/player/${playerID}`);
-};
-return (
+  // Group players by position name
+  const groupedPlayer = squad.players.reduce((acc: Record<string, Player[]>, player) => {
+    const position = player.player.position.name;
+
+    if (!acc[position]) {
+      acc[position] = [];
+    }
+
+    acc[position].push(player);
+    return acc;
+  }, {});
+
+  // Define the order of positions to render
+  const orderedPositions = ['Goalkeeper', 'Defender', 'Midfielder', 'Attacker'];
+
+  // Sort the grouped players accordingly
+  const sortedGroupedPlayers: Record<string, Player[]> = {};
+  orderedPositions.forEach((pos) => {
+    if (groupedPlayer[pos]) {
+      sortedGroupedPlayers[pos] = groupedPlayer[pos];
+    }
+  });
+
+  return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-    <SafeAreaProvider>
-    <SafeAreaView style={{ flex: 1 }}>
-        <FlatList
-        data={squad?.players}
-        renderItem={({ item }) => {
-            return(
-            <TouchableOpacity onPress={() => handlePlayerPress(item.player.id, item.player.common_name)}>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                padding: 10,
-                borderBottomWidth: 1,
-                borderBottomColor: '#ccc'
-            }}>
-                
-                <Text style={{ fontSize: 16 }}>{item.player.common_name}</Text>
-                <Text style={{ fontSize: 16 }}>{item.jersey_number}</Text>
-                
-            </View>
-            </TouchableOpacity>
-            )
-        }}
-        
-        />
-    </SafeAreaView>
-    </SafeAreaProvider>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1 }}>
+          <PlayersList players={sortedGroupedPlayers} />
+        </SafeAreaView>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
-)
+  );
 }

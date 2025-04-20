@@ -19,51 +19,49 @@ export default function PlayerBio({ player }: { player: PlayerDetails }) {
       )
     : null;
 
-    const bioItems = [
-      {
-        label: 'Current team',
-        value: player.teams?.[0]?.team?.name ?? '—',
-        image: player.teams?.[0]?.team?.image_path,
-      },
-      {
-        label: 'Shirt',
-        value: currentSeasonStats?.jersey_number?.toString() || '—',
-      },
-      {
-        label: 'Position',
-        value: player.position?.name ?? '—',
-      },
-      {
-        label: 'Height',
-        value: player.height ? `${player.height} cm` : '—',
-      },
-      {
-        label: 'Preferred foot',
-        value: player.metadata?.[0]?.values || '—',
-      },
-      {
-        label: 'Country',
-        value: player.nationality?.fifa_name ?? '—',
-        image: player.nationality?.image_path,
-      },
-      {
-        label: 'Age',
-        value: age ? `${age} years` : '—',
-        sub: birthDate ?? '',
-      },
-    ];
-    
+  const bioItems = [
+    {
+      label: 'Country',
+      value: player.nationality?.fifa_name ?? '—',
+      image: player.nationality?.image_path,
+    },
+    {
+      label: 'Age',
+      value: age ? `${age} years` : '—',
+      sub: birthDate ?? '',
+    },
+    {
+      label: 'Height',
+      value: player.height ? `${player.height} cm` : '—',
+    },
+    {
+      label: 'Preferred foot',
+      value: player.metadata?.[0]?.values || '—',
+    },
+    {
+      label: 'Position',
+      value: player.position?.name ?? '—',
+    },
+    {
+      label: 'Shirt',
+      value: currentSeasonStats?.jersey_number?.toString() || '—',
+    },
+  ];
 
   return (
     <View style={styles.cardContainer}>
-      {bioItems.map((item, idx) => (
-        <View style={styles.bioItem} key={idx}>
-          {item.image && (
-            <Image source={{ uri: item.image }} style={styles.flag} />
-          )}
-          <Text style={styles.valueText}>{item.value}</Text>
-          {item.sub && <Text style={styles.subText}>{item.sub}</Text>}
+      {bioItems.map((item, index) => (
+        <View key={index} style={styles.gridItem}>
           <Text style={styles.labelText}>{item.label}</Text>
+          <View style={styles.valueRow}>
+            {item.image && (
+              <Image source={{ uri: item.image }} style={styles.flag} />
+            )}
+            <View>
+              <Text style={styles.valueText}>{item.value}</Text>
+              {item.sub && <Text style={styles.subText}>{item.sub}</Text>}
+            </View>
+          </View>
         </View>
       ))}
     </View>
@@ -81,12 +79,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#e0e0e0',
     margin: 12,
-
   },
-  bioItem: {
-    width: '45%',
+  gridItem: {
+    width: '30%', // Three columns
     marginBottom: 16,
-    alignItems: 'flex-start',
+  },
+  valueRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 4,
   },
   valueText: {
     fontSize: 16,
@@ -96,17 +98,14 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 13,
     color: '#666',
-    marginTop: 4,
   },
   subText: {
     fontSize: 12,
     color: '#888',
-    marginTop: 2,
   },
   flag: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    marginBottom: 4,
   },
 });

@@ -12,6 +12,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
 import { SegmentedButtons } from 'react-native-paper';
 import PlayerBio from '@/components/Player/PlayerBio';
+import PlayerStats from '@/components/Player/PlayerStats';
 
 
 
@@ -58,6 +59,7 @@ export default function PlayerOverView() {
               </View>
             </View>
                 <PlayerBio player={playerInfo} />
+                <PlayerStats player={playerInfo} />
             <View>
 
             </View>

@@ -179,7 +179,9 @@ export interface Details {
   standing_type: string; // Type of standing (e.g., "standing")
   type: Type; // Type object
   type_id: number; // Type ID
-  value: number; // Value of the detail (e.g., goals scored)
+  value: {
+    total: number; // Total value (e.g., total points)
+  }; // Value of the detail (e.g., goals scored)
 }
 
 export interface Rule {

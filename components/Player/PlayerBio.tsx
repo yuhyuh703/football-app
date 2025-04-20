@@ -58,7 +58,7 @@ export default function PlayerBio({ player }: { player: PlayerDetails }) {
               <Image source={{ uri: item.image }} style={styles.flag} />
             )}
             <View>
-              <Text style={styles.valueText}>{item.value.toString()}</Text>
+              <Text style={styles.valueText}>{item.value}</Text>
               {item.sub && <Text style={styles.subText}>{item.sub}</Text>}
             </View>
           </View>

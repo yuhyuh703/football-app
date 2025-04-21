@@ -56,6 +56,8 @@ export default function FixtureInfo() {
     fetchMatchDetails(Number(fixtureID));
   }, [fixtureID]);
 
+  console.log('Fixture Info:', fixtureInfo);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -70,7 +72,9 @@ export default function FixtureInfo() {
 
         {/* Match Result */}
         {teams && (
-          <FixtureResult homeTeam={teams.home} awayTeam={teams.away} score={scores} goals={goals} />
+          <FixtureResult 
+            homeTeam={teams.home} awayTeam={teams.away} score={scores} goals={goals} state={fixtureInfo.state} starting_at={fixtureInfo.starting_at}
+           />
         )}
 
         {/* Match Details */}

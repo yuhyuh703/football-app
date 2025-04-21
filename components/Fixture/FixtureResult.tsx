@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
-import { Fixture, Participant, Event } from '@/types/types';
+import { Fixture, Participant, Event, State } from '@/types/types';
 
 interface FixtureResultProps {
   homeTeam: Participant;
@@ -13,14 +13,23 @@ interface FixtureResultProps {
     home: Event[] | [];
     away: Event[] | [];
   };
+  state: State;
+  starting_at: string;
 }
-
 export default function FixtureResult({
   homeTeam,
   awayTeam,
   score,
   goals,
+  state,
+  starting_at
 }: FixtureResultProps) {
+
+    const kickoff = new Date(starting_at).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+
   return (
     <View style={styles.container}>
       <View style={styles.teamsRow}>
@@ -30,8 +39,14 @@ export default function FixtureResult({
         </View>
 
         <View style={styles.scoreBlock}>
-          <Text style={styles.scoreText}>{score.home} - {score.away}</Text>
-          <Text style={styles.statusText}>Full time</Text>
+          {state.id !== 1 ? (
+            <Text style={styles.scoreText}>{score.home} - {score.away}</Text>
+          ) : (
+            <View style={styles.kickoffContainer}>
+                 <Text style={styles.kickoffText}>{kickoff}</Text>
+                 <Text style={styles.statusText}>{state.name}</Text>
+            </View>
+        )}
         </View>
 
         <View style={styles.teamBlock}>
@@ -98,6 +113,14 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       color: '#111',
     },
+    kickoffContainer: { 
+        alignItems: 'center', 
+        justifyContent: 'center',
+      },
+    kickoffText: {
+      fontSize: 20,
+      fontWeight: '600',
+    },
     statusText: {
       fontSize: 14,
       color: '#666',
@@ -111,4 +134,3 @@ const styles = StyleSheet.create({
       color: '#333',
     },
   });
-  

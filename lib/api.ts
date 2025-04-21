@@ -136,7 +136,7 @@ export async function fetchPlayerByID(playerID: number){
 }
 
 export async function fetchMatchInfo(fixtureID: number) {
-  const fullApiUrl = `${apiUrl}/fixtures/${fixtureID}?include=participants;league;venue;state;scores;events.type;events.period;events.player;statistics.type;sidelined.sideline.player;sidelined.sideline.type;weatherReport`
+  const fullApiUrl = `${apiUrl}/fixtures/${fixtureID}?include=participants;league;venue;state;scores;events.type;periods;events.participant;events.player;statistics.type;sidelined.sideline.player;sidelined.sideline.type;weatherReport;lineups.details.type;lineups.position;formations;timeline`
   try{
     const response = await fetch(fullApiUrl, {
       method: 'GET',

@@ -37,7 +37,7 @@ export interface Match {
   result_info: string | null; // Additional result information (nullable)
   details: string | null; // Additional match details (nullable)
   participants: Participant[]; // Array of participants (teams)
-  scores: Scores[]; // Array of scores (if available)
+  scores?: Scores[]; // Array of scores (if available)
   round: Round; // Round information
   stage: Stage; // Stage information
   state: State; // State information
@@ -55,6 +55,7 @@ export interface Participant {
   founded: number; // Year the team was founded
   type: string; // Type of the team (e.g., "domestic")
   last_played_at: string; // Last played date and time (YYYY-MM-DD HH:mm:ss)
+  meta: MetaData; // Array of metadata
 }
 
 export interface Scores {
@@ -108,6 +109,8 @@ export interface Fixture {
   state_id: number; // State ID
   venue_id: number; // Venue ID
   venue: Venue; // Venue object
+  participants: Participant[]; // Array of participants (teams)
+  events: Event[]; // Array of events (if available)
 }
 
 export interface Stage {
@@ -270,6 +273,9 @@ export interface MetaData {
   type_id: number; // Type ID
   value_type: string; // Type of value (e.g., "string")
   values: string; // Values associated with the metadata
+  location?: string; // Location of the metadata
+  position?: string; // Position of the metadata
+  winner?: boolean; // Indicates if the metadata is a winner
 }
 
 

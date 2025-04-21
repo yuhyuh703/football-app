@@ -9,7 +9,7 @@ export default function MatchCard({ match }: { match: Match }) {
   const [scores, setScores] = useState({ home: 0, away: 0 });
 
   const getScore = (team: string) =>
-    match.scores.find(
+    match.scores?.find(
       (score) => score.type_id === 1525 && score.score.participant === team
     )?.score?.goals ?? 0;
 

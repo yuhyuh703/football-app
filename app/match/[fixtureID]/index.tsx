@@ -30,7 +30,7 @@ export default function FixtureInfo() {
 
   const getGoals = (fixture: Fixture, teamId?: number) => {
     return fixture.events?.filter(
-      (event) => event.type_id === 14 && event.participant_id === teamId
+      (event) => (event.type_id === 14 || event.type_id === 16) && event.participant_id === teamId
     ) ?? [];
   };
 

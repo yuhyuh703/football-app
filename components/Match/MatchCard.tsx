@@ -1,12 +1,13 @@
 import { View, StyleSheet, Image } from 'react-native';
 import { Text } from 'react-native-paper';
-import { Match } from '@/types/types';
+import { Match, Participant } from '@/types/types';
 import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function MatchCard({ match }: { match: Match }) {
   const [scores, setScores] = useState({ home: 0, away: 0 });
+  const [teams, setTeams] = useState<{ home: Participant; away: Participant } | null>(null);
 
   const getScore = (team: string) =>
     match.scores?.find(
@@ -30,7 +31,14 @@ export default function MatchCard({ match }: { match: Match }) {
       home: getScore('home'),
       away: getScore('away')
     });
-  }, [match]);
+    const home = match.participants?.find((p: Participant) => p.meta?.location === 'home');
+    const away = match.participants?.find((p: Participant) => p.meta?.location === 'away');
+    if (home && away) {
+      setTeams({ home, away });
+    }
+    console.log(home,away)
+  }, []);
+
 
   const kickoff = new Date(match.starting_at).toLocaleTimeString([], {
     hour: '2-digit',
@@ -42,8 +50,8 @@ export default function MatchCard({ match }: { match: Match }) {
       <View style={styles.cardRow}>
 
         <View style={styles.teamContainer}>
-          <Image source={{ uri: match.participants[0]?.image_path }} style={styles.flag} />
-          <Text style={styles.teamName}>{match.participants[0]?.name}</Text>
+          <Image source={{ uri: teams?.home?.image_path }} style={styles.flag} />
+          <Text style={styles.teamName}>{teams?.home.name}</Text>
         </View>
 
 
@@ -61,8 +69,8 @@ export default function MatchCard({ match }: { match: Match }) {
         </View>
 
         <View style={styles.teamContainerRight}>
-          <Text style={styles.teamName}>{match.participants[1]?.name}</Text>
-          <Image source={{ uri: match.participants[1]?.image_path }} style={styles.flag} />
+          <Text style={styles.teamName}>{teams?.away.name}</Text>
+          <Image source={{ uri: teams?.away?.image_path  }} style={styles.flag} />
         </View>
       </View>
     </TouchableOpacity>

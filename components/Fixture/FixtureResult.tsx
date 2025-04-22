@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { Fixture, Participant, Event, State } from '@/types/types';
+import { Text } from 'react-native-paper';
 
 interface FixtureResultProps {
   homeTeam: Participant;

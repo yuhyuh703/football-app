@@ -9,6 +9,7 @@ import FixtureResult from '@/components/Fixture/FixtureResult';
 import FixtureDetails from '@/components/Fixture/FixtureDetails';
 import { ScrollView } from 'react-native-gesture-handler';
 import FixtureSidelined from '@/components/Fixture/FixtureSidelined';
+import FixtureVenue from '@/components/Fixture/FitureVenue';
 
 export default function FixtureInfo() {
   const navigation = useNavigation();
@@ -80,6 +81,11 @@ export default function FixtureInfo() {
           {fixtureInfo?.sidelined && teams?.home && teams?.away && (
             <FixtureSidelined sidelined={fixtureInfo.sidelined} teams={teams}/>
           )}
+
+          {fixtureInfo?.venue && (
+            <FixtureVenue venue={fixtureInfo.venue} />
+          )}
+
 
           
         </ScrollView>

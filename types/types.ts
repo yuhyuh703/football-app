@@ -113,6 +113,7 @@ export interface Fixture {
   events: Event[]; // Array of events (if available)
   statistics: Statistics[]; // Array of statistics (if available)
   sidelined: FixtureSideline[]; // Array of sidelined players (if available)
+  periods: Period[]; // Array of periods (if available)
 }
 
 export interface Statistics {

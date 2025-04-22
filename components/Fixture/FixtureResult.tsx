@@ -26,7 +26,9 @@ export default function FixtureResult({
   starting_at
 }: FixtureResultProps) {
 
-    const kickoff = new Date(starting_at).toLocaleTimeString([], {
+    const date = new Date(starting_at).toLocaleTimeString([], {
+        month: '2-digit',
+        day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
     });
@@ -41,10 +43,13 @@ export default function FixtureResult({
 
         <View style={styles.scoreBlock}>
           {state.id !== 1 ? (
-            <Text style={styles.scoreText}>{score.home} - {score.away}</Text>
+           <View>
+             <Text style={styles.scoreText}>{score.home} - {score.away}</Text>
+             <Text>{state.name}</Text>
+            </View>
           ) : (
             <View style={styles.kickoffContainer}>
-                 <Text style={styles.kickoffText}>{kickoff}</Text>
+                 <Text style={styles.kickoffText}>{date}</Text>
                  <Text style={styles.statusText}>{state.name}</Text>
             </View>
         )}

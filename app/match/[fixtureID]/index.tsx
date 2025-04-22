@@ -7,6 +7,8 @@ import { fetchMatchInfo } from '@/lib/api';
 import { Fixture, Event, Participant } from '@/types/types';
 import FixtureResult from '@/components/Fixture/FixtureResult';
 import FixtureDetails from '@/components/Fixture/FixtureDetails';
+import { ScrollView } from 'react-native-gesture-handler';
+import FixtureSidelined from '@/components/Fixture/FixtureSidelined';
 
 export default function FixtureInfo() {
   const navigation = useNavigation();
@@ -63,16 +65,24 @@ export default function FixtureInfo() {
             <Ionicons name="chevron-back" size={28} color="#000" />
           </TouchableOpacity>
         </View>
-
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 40 }}>
         {teams?.home && teams?.away && fixtureInfo?.state && fixtureInfo?.starting_at && (
           <FixtureResult 
             homeTeam={teams.home} awayTeam={teams.away} score={scores} goals={goals} state={fixtureInfo.state} starting_at={fixtureInfo.starting_at}
            />
         )}
 
-        {fixtureInfo?.statistics && teams?.home && teams?.away && (
-          <FixtureDetails statistics={fixtureInfo.statistics} teams={teams} />
-        )}
+      
+          {fixtureInfo?.statistics && teams?.home && teams?.away && (
+            <FixtureDetails statistics={fixtureInfo.statistics} teams={teams} />
+          )}
+
+          {fixtureInfo?.sidelined && teams?.home && teams?.away && (
+            <FixtureSidelined sidelined={fixtureInfo.sidelined} teams={teams}/>
+          )}
+
+          
+        </ScrollView>
 
       </SafeAreaView>
     </GestureHandlerRootView>

@@ -112,6 +112,7 @@ export interface Fixture {
   participants: Participant[]; // Array of participants (teams)
   events: Event[]; // Array of events (if available)
   statistics: Statistics[]; // Array of statistics (if available)
+  sidelined: Sideline[]; // Array of sidelined players (if available)
 }
 
 export interface Statistics {
@@ -390,6 +391,15 @@ export interface Sideline {
   start_date: string; // Start date of the sidelined status (YYYY-MM-DD)
   team_id: number; // Team ID
   type_id: number; // Type ID of the sidelined status
+  
+}
+
+export interface FixtureSideline  extends Sideline {
+  participant_id: number; // Participant ID
+  fixture_id: number; // Fixture ID
+  sideline: Sideline; // Sidelined object
+  sideline_id: number; // Sidelined ID
+  id: number; // Unique ID of the fixture sidelined
 }
 
 

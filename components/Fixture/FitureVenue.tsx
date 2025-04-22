@@ -2,7 +2,6 @@ import { Venue } from "@/types/types";
 import { View, Text, Image, StyleSheet } from "react-native";
 
 export default function FixtureVenue({venue}: {venue: Venue}) {
-    console.log('Fixture Venue:', venue);
     return(
         <View style={styles.section}>
             <Text style={styles.sectionTitle}>Venue</Text>
@@ -13,7 +12,6 @@ export default function FixtureVenue({venue}: {venue: Venue}) {
     )
 
 }
-
 
 const styles = StyleSheet.create({
     flex: {

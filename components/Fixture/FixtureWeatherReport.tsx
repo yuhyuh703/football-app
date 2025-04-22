@@ -4,9 +4,6 @@ import { Fixture, WeatherReport } from '@/types/types'
 import { StyleSheet } from 'react-native'
 
 export default function FixtureWeather({ weather }: { weather: WeatherReport }) {
-    console.log('FixtureWeatherReport:', weather)
-    console.log(weather.icon)
-  
     return (
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Weather Report</Text>

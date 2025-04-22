@@ -10,6 +10,7 @@ import FixtureDetails from '@/components/Fixture/FixtureDetails';
 import { ScrollView } from 'react-native-gesture-handler';
 import FixtureSidelined from '@/components/Fixture/FixtureSidelined';
 import FixtureVenue from '@/components/Fixture/FitureVenue';
+import FixtureWeatherReport from '@/components/Fixture/FixtureWeatherReport';
 
 export default function FixtureInfo() {
   const navigation = useNavigation();
@@ -67,14 +68,14 @@ export default function FixtureInfo() {
           </TouchableOpacity>
         </View>
         <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 40 }}>
+        
         {teams?.home && teams?.away && fixtureInfo?.state && fixtureInfo?.starting_at && (
           <FixtureResult 
             homeTeam={teams.home} awayTeam={teams.away} score={scores} goals={goals} state={fixtureInfo.state} starting_at={fixtureInfo.starting_at}
            />
         )}
 
-      
-          {fixtureInfo?.statistics && teams?.home && teams?.away && (
+          {fixtureInfo?.statistics && teams?.home && teams?.away && fixtureInfo.state_id != 1 && (
             <FixtureDetails statistics={fixtureInfo.statistics} teams={teams} />
           )}
 
@@ -85,8 +86,9 @@ export default function FixtureInfo() {
           {fixtureInfo?.venue && (
             <FixtureVenue venue={fixtureInfo.venue} />
           )}
-
-
+          {fixtureInfo?.weatherreport&& (
+            <FixtureWeatherReport weather={fixtureInfo.weatherreport} />
+          )}
           
         </ScrollView>
 

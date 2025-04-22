@@ -114,7 +114,21 @@ export interface Fixture {
   statistics: Statistics[]; // Array of statistics (if available)
   sidelined: FixtureSideline[]; // Array of sidelined players (if available)
   periods: Period[]; // Array of periods (if available)
+  weatherreport: WeatherReport; // Weather report object
 }
+export interface WeatherReport{
+  icon: string; // Weather icon URL
+  current:{
+    clouds: string; // Cloud cover percentage
+    description: string; // Weather description (e.g., "light rain")
+    feels_like: number; // Feels like temperature in Celsius
+    humidity: string; // Humidity percentage
+    pressure: number; // Atmospheric pressure in hPa
+    temp: number; // Current temperature in Celsius
+    wind: number; // Wind speed in m/s
+  }
+}
+
 
 export interface Statistics {
   id: number; // Statistics ID

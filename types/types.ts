@@ -112,7 +112,7 @@ export interface Fixture {
   participants: Participant[]; // Array of participants (teams)
   events: Event[]; // Array of events (if available)
   statistics: Statistics[]; // Array of statistics (if available)
-  sidelined: Sideline[]; // Array of sidelined players (if available)
+  sidelined: FixtureSideline[]; // Array of sidelined players (if available)
 }
 
 export interface Statistics {

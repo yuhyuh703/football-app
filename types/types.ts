@@ -111,8 +111,21 @@ export interface Fixture {
   venue: Venue; // Venue object
   participants: Participant[]; // Array of participants (teams)
   events: Event[]; // Array of events (if available)
+  statistics: Statistics[]; // Array of statistics (if available)
 }
 
+export interface Statistics {
+  id: number; // Statistics ID
+  fixture_id: number; // Fixture ID
+  participant_id: number; // Participant ID
+  type_id: number; // Type ID of the statistics
+  type: Type; // Type object of the statistics
+  location: string; // Location of the statistics (e.g., "home", "away")
+  data: {
+    value: number; // Value of the statistics (e.g., percentage)
+  }; // Data object containing the value
+
+}
 export interface Stage {
   id: number; // Stage ID
   sport_id: number; // Sport ID

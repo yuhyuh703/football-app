@@ -36,8 +36,7 @@ export default function MatchCard({ match }: { match: Match }) {
     if (home && away) {
       setTeams({ home, away });
     }
-    console.log(home,away)
-  }, []);
+  }, [match]);
 
 
   const kickoff = new Date(match.starting_at).toLocaleTimeString([], {

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { Fixture, Participant, Event, State } from '@/types/types';
+import { Fixture, Participant, Event, State,Period } from '@/types/types';
 import { Text } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { router } from 'expo-router';
 
 interface FixtureResultProps {
   homeTeam: Participant;
@@ -16,15 +18,20 @@ interface FixtureResultProps {
   };
   state: State;
   starting_at: string;
+  periods: Period[];
 }
+
 export default function FixtureResult({
   homeTeam,
   awayTeam,
   score,
   goals,
   state,
-  starting_at
+  starting_at,
+  periods,
 }: FixtureResultProps) {
+
+  console.log('periods in fixture results',periods)
 
     const date = new Date(starting_at).toLocaleTimeString([], {
         month: '2-digit',
@@ -33,13 +40,22 @@ export default function FixtureResult({
         minute: '2-digit',
     });
 
+    const handleTeamPress = (id: number) => {
+      router.push({
+        pathname: '/team/[teamID]',
+        params: { teamID: id },
+      });
+    }
+
   return (
     <View style={styles.container}>
       <View style={styles.teamsRow}>
-        <View style={styles.teamBlock}>
-          <Image source={{ uri: homeTeam.image_path }} style={styles.logo} />
-          <Text style={styles.teamName}>{homeTeam.name}</Text>
-        </View>
+        <TouchableOpacity onPress={() => handleTeamPress(homeTeam.id)}>
+          <View style={styles.teamBlock}>
+            <Image source={{ uri: homeTeam.image_path }} style={styles.logo} />
+            <Text style={styles.teamName}>{homeTeam.name}</Text>
+          </View>
+        </TouchableOpacity>
 
         <View style={styles.scoreBlock}>
           {state.id !== 1 ? (
@@ -54,11 +70,12 @@ export default function FixtureResult({
             </View>
         )}
         </View>
-
-        <View style={styles.teamBlock}>
-          <Image source={{ uri: awayTeam.image_path }} style={styles.logo} />
-          <Text style={styles.teamName}>{awayTeam.name}</Text>
-        </View>
+        <TouchableOpacity onPress={() => handleTeamPress(homeTeam.id)}>
+          <View style={styles.teamBlock}>
+            <Image source={{ uri: awayTeam.image_path }} style={styles.logo} />
+            <Text style={styles.teamName}>{awayTeam.name}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.goalsBlock}>

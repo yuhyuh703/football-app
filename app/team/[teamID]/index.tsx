@@ -13,12 +13,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import SkeletonComponent from '@/components/SkeletonComponent';
 
 export default function Team() {
   const navigation = useNavigation();
   const { teamID } = useLocalSearchParams();
   const [selectedTab, setSelectedTab] = useState('teamInfo');
   const [teamInfo, setTeamInfo] = useState<FullParticipant | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTeamInfo = async (teamID: number) => {
@@ -28,6 +30,8 @@ export default function Team() {
         console.log('Team info data:', data);
       } catch (error) {
         console.error('Error loading team info:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTeamInfo(teamID as unknown as number);
@@ -74,12 +78,12 @@ export default function Team() {
             style={styles.segmented}
           />
 
-          {/* Content */}
-          <View style={styles.content}>
-            {selectedTab === 'teamInfo' && <ClubInfo info={teamInfo} />}
-            {selectedTab === 'squad' && <ClubSquad squad={teamInfo} />}
-            {selectedTab === 'matches' && <Text>Matches</Text>}
-          </View>
+          {loading ? <SkeletonComponent />  : (  
+            <View style={styles.content}>
+              {selectedTab === 'teamInfo' && <ClubInfo info={teamInfo} />}
+              {selectedTab === 'squad' && <ClubSquad squad={teamInfo} />}
+            </View>
+          )}
         </SafeAreaView>
       </SafeAreaProvider>
     </GestureHandlerRootView>

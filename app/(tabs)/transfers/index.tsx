@@ -6,11 +6,12 @@ import { View, StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import TransferList from "@/components/Transfer/TransferList";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import SkeletonComponent from "@/components/SkeletonComponent";
+
 
 export default function Transfers() {
-
   const [transfers, setTransfers] = useState<Transfer[]>([]);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTransfers = async () => {
@@ -20,6 +21,8 @@ export default function Transfers() {
         setTransfers(data);
       } catch (error) {
         console.error('Error loading transfers:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchTransfers();
@@ -34,14 +37,15 @@ export default function Transfers() {
         <Text style={styles.headerText}>Transfers</Text>
       </View>
       <View>
-           {transfers && <TransferList transfers={transfers} />}
+        {loading && transfers ? 
+          <SkeletonComponent />  : <TransferList transfers={transfers} />
+        }
       </View>
     </SafeAreaView>
     </SafeAreaProvider>
     </GestureHandlerRootView>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {

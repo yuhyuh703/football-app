@@ -10,6 +10,7 @@ import MatchList from "@/components/Match/MatchList";
 import LiveMatch from "@/components/LiveMatch/LiveMatch"; 
 import { fetchMatchesByDate } from "@/lib/api";
 import { League, SelectedDate } from "../../../types/types";
+import SkeletonComponent from "@/components/SkeletonComponent";
 
 export default function Matches() {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(
@@ -23,15 +24,19 @@ export default function Matches() {
   const [matches, setMatches] = useState<League[]>([]);
   const [liveOpen, setLiveOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadMatches = async () => {
       try {
         const data = await fetchMatchesByDate(selectedDate);
+        
         setMatches(data);
         console.log("Matches data:", data);
       } catch (error) {
         console.error("Error loading matches:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -73,10 +78,13 @@ export default function Matches() {
               />
             </View>
           </View>
-
+          
           <View style={styles.matchListWrapper}>
-            {liveOpen ? <LiveMatch /> : <MatchList matches={matches} />}
+            {loading ? 
+              <SkeletonComponent />  : <MatchList matches={matches}/>
+            }
           </View>
+
 
           <BottomSheet
             ref={bottomSheetRef}

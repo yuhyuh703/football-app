@@ -5,7 +5,11 @@ export default function FixtureVenue({venue}: {venue: Venue}) {
     return(
         <View style={styles.section}>
             <Text style={styles.sectionTitle}>Venue</Text>
-            <Image source={{ uri: venue.image_path }} style={styles.venueImage} />
+            {venue.image_path ? 
+              (<Image source={{ uri: venue.image_path }} style={styles.venueImage} />)
+              :
+              <Text style = {{padding: 10}}>No picture of the venue</Text>
+            }
             <Text style={styles.venueName}>{venue.name}</Text>
             <Text style={styles.venueCapacity}>Capacity: {venue.capacity}</Text>
       </View>

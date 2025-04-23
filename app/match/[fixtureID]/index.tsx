@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { useLocalSearchParams, Stack, useNavigation } from 'expo-router';
-import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchMatchInfo } from '@/lib/api';
 import { Fixture, Event, Participant } from '@/types/types';
@@ -77,33 +77,35 @@ export default function FixtureInfo() {
         {loading ? (
           <SkeletonComponent />
         ) : (
-          <View style={{ flex: 1, paddingBottom: 40 }}>
-            {teams?.home && teams?.away && fixtureInfo?.state && fixtureInfo?.starting_at && (
-              <FixtureResult
-                homeTeam={teams.home}
-                awayTeam={teams.away}
-                score={scores}
-                goals={goals}
-                state={fixtureInfo.state}
-                starting_at={fixtureInfo.starting_at}
-                periods={fixtureInfo.periods}
-              />
-            )}
+          <ScrollView>
+            <View style={{ flex: 1, paddingBottom: 40 }}>
+              {teams?.home && teams?.away && fixtureInfo?.state && fixtureInfo?.starting_at && (
+                <FixtureResult
+                  homeTeam={teams.home}
+                  awayTeam={teams.away}
+                  score={scores}
+                  goals={goals}
+                  state={fixtureInfo.state}
+                  starting_at={fixtureInfo.starting_at}
+                  periods={fixtureInfo.periods}
+                />
+              )}
 
-            {fixtureInfo?.statistics && teams?.home && teams?.away && fixtureInfo.state_id !== 1 && (
-              <FixtureDetails statistics={fixtureInfo.statistics} teams={teams} />
-            )}
+              {fixtureInfo?.statistics && teams?.home && teams?.away && fixtureInfo.state_id !== 1 && (
+                <FixtureDetails statistics={fixtureInfo.statistics} teams={teams} />
+              )}
 
-            {fixtureInfo?.sidelined && teams?.home && teams?.away && (
-              <FixtureSidelined sidelined={fixtureInfo.sidelined} teams={teams} />
-            )}
+              {fixtureInfo?.sidelined && teams?.home && teams?.away && (
+                <FixtureSidelined sidelined={fixtureInfo.sidelined} teams={teams} />
+              )}
 
-            {fixtureInfo?.venue && <FixtureVenue venue={fixtureInfo.venue} />}
+              {fixtureInfo?.venue && <FixtureVenue venue={fixtureInfo.venue} />}
 
-            {fixtureInfo?.weatherreport && (
-              <FixtureWeatherReport weather={fixtureInfo.weatherreport} />
-            )}
-          </View>
+              {fixtureInfo?.weatherreport && (
+                <FixtureWeatherReport weather={fixtureInfo.weatherreport} />
+              )}
+            </View>
+          </ScrollView>
         )}
       </SafeAreaView>
     </GestureHandlerRootView>

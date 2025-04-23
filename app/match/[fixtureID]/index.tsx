@@ -42,7 +42,7 @@ export default function FixtureInfo() {
       try {
         const data = await fetchMatchInfo(fixtureID);
         setFixtureInfo(data);
-
+        console.log('Fixture data:', data);
         const home = data.participants?.find((p: Participant) => p.meta?.location === 'home');
         const away = data.participants?.find((p: Participant) => p.meta?.location === 'away');
 

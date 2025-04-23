@@ -28,6 +28,7 @@ export default function FixtureResult({
   goals,
   state,
   starting_at,
+  periods,
 }: FixtureResultProps) {
   const date = new Date(starting_at).toLocaleTimeString([], {
     hour: '2-digit',
@@ -40,6 +41,7 @@ export default function FixtureResult({
       params: { teamID: id },
     });
   };
+
 
   return (
     <View style={styles.container}>
@@ -59,7 +61,13 @@ export default function FixtureResult({
           {state.id !== 1 ? (
             <>
               <Text style={styles.scoreText}>{score.home} - {score.away}</Text>
-              <Text style={styles.statusText}>{state.name}</Text>
+              {state.id === 2 ? (
+                <Text style={styles.statusText}>{periods[0]?.minutes}'</Text>
+              ) : state.id === 22 ? (
+                <Text style={styles.statusText}>{periods[1]?.minutes}'</Text>
+              ) : (
+                <Text style={styles.statusText}>{state.name}</Text>
+              )}
             </>
           ) : (
             <>

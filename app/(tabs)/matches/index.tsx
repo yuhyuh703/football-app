@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { Text, IconButton } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -7,7 +7,6 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { Calendar } from "react-native-calendars";
 import { router } from "expo-router";
 import MatchList from "@/components/Match/MatchList";
-import LiveMatch from "@/components/LiveMatch/LiveMatch"; 
 import { fetchMatchesByDate } from "@/lib/api";
 import { League, SelectedDate } from "../../../types/types";
 import SkeletonComponent from "@/components/SkeletonComponent";
@@ -22,7 +21,6 @@ export default function Matches() {
     } as SelectedDate
   );
   const [matches, setMatches] = useState<League[]>([]);
-  const [liveOpen, setLiveOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,26 +45,16 @@ export default function Matches() {
     console.log("handleSheetChanges", index);
   }, []);
 
-  const handleLiveMatchesPress = () => {
-    setLiveOpen((prevState) => !prevState); 
-  };
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
-            <IconButton
-              icon="access-point"
-              onPress={handleLiveMatchesPress}
-              size={32}
-              style={styles.iconButton}
-            />
+            <Image source={require('/Users/matic/mobile/myapp/assets/images/favicon.png')} style={{ width: 30, height: 30, marginLeft: 10 }} />
             <View style={styles.dateRow}>
               <Text style={styles.dateText}>
-                {liveOpen 
-                  ? "Live" 
-                  : selectedDate.dateString === new Date().toISOString().split("T")[0] 
+                {selectedDate.dateString === new Date().toISOString().split("T")[0] 
                   ? "Today" 
                   : selectedDate.dateString}
               </Text>
@@ -99,7 +87,6 @@ export default function Matches() {
                   bottomSheetRef.current?.close();
                   console.log(day, "pressed");
                   setSelectedDate(day);
-                  setLiveOpen(false);
                 }}
                 markedDates={{
                   [selectedDate.dateString]: {
@@ -163,6 +150,7 @@ const styles = StyleSheet.create({
   },
   matchListWrapper: {
     padding: 5,
+    marginBottom: 50
   },
   contentContainer: {
     flex: 1,

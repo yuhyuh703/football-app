@@ -187,7 +187,7 @@ export async function fetchLiveMatches() {
 }
 
 export async function fetchTransfersLatest(){
-  const fullApiUrl = `${apiUrl}/transfers/latest?include=player;fromTeam;toTeam;type;`
+  const fullApiUrl = `${apiUrl}/transfers?include=player;fromTeam;toTeam;type;`
   try{
     const reponse = await fetch (fullApiUrl, {
       method: 'GET',

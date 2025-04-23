@@ -171,13 +171,19 @@ export interface Transfer {
   date: string; // Date of the transfer in string format (YYYY-MM-DD)
   detailed_position_id: number; // ID for the detailed position
   from_team_id: number; // ID of the team the player is transferring from
+  fromteam: Team; // Team object of the team the player is transferring from
   id: number; // Unique ID of the transfer
   player_id: number; // ID of the player involved in the transfer
+  player: PlayerDetails; // Player object
   position_id: number; // ID of the player's position
   sport_id: number; // ID of the sport
   to_team_id: number; // ID of the team the player is transferring to
+  toteam: Team; // Team object of the team the player is transferring to
   type_id: number; // ID of the transfer type
+  type: Type; // Type object of the transfer
 }
+
+
 
 export interface SelectedDate {
   dateString: string; // Selected date in string format (YYYY-MM-DD)

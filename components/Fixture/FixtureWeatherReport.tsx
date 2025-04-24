@@ -8,20 +8,23 @@ export default function FixtureWeather({ weather }: { weather: WeatherReport }) 
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Weather Report</Text>
   
-        <View style={styles.row}>
-          <Image source={{ uri: weather.icon }} style={styles.icon} />
-  
-          <View style={styles.details}>
-            <Text style={styles.mainText}>{weather.current.temp}°C</Text>
-            <Text style={styles.description}>{weather.current.description}</Text>
-          </View>
-  
-          <View style={styles.meta}>
-            <Text style={styles.label}>Feels like: {weather.current.feels_like}°C</Text>
-            <Text style={styles.label}>Wind: {weather.current.wind} m/s</Text>
-            <Text style={styles.label}>Humidity: {weather.current.humidity}</Text>
-          </View>
-        </View>
+        {weather.current ? 
+          (<View style={styles.row}>
+            <Image source={{ uri: weather.icon }} style={styles.icon} />
+    
+            <View style={styles.details}>
+              <Text style={styles.mainText}>{weather.current?.temp}°C</Text>
+              <Text style={styles.description}>{weather.current?.description}</Text>
+            </View>
+    
+            <View style={styles.meta}>
+              <Text style={styles.label}>Feels like: {weather.current?.feels_like}°C</Text>
+              <Text style={styles.label}>Wind: {weather.current?.wind} m/s</Text>
+              <Text style={styles.label}>Humidity: {weather.current?.humidity}</Text>
+            </View>
+          </View>)
+          : 
+        <Text style={styles.description}>No weather data available</Text>}
       </View>
     );
   }

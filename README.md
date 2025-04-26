@@ -1,50 +1,32 @@
-# Welcome to your Expo app 👋
+## Technologies
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+- **Expo & React Native**  
+  Build once, run on both iOS and Android with Expo and React Native.
 
-## Get started
+- **TypeScript**  
+  Adds types to JavaScript so you catch errors early.
 
-1. Install dependencies
+- **Expo Router**  
+  Easy file-based navigation using folder and file names.
 
-   ```bash
-   npm install
-   ```
+- **React Native Paper**  
+  Ready-made buttons, cards, text, and icons that follow Material Design.
 
-2. Start the app
+- **React Native Calendars**  
+  A calendar you can style and use to pick dates.
 
-   ```bash
-    npx expo start
-   ```
+- **@gorhom/bottom-sheet**  
+  A smooth sliding panel for showing the calendar.
 
-In the output, you'll find options to open the app in a
+- **react-native-gesture-handler**  
+  Handles taps, swipes, and other gestures.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Moti Skeleton**  
+  Shows gray loading placeholders while data is on its way.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **date-fns**  
+  Simple tools for formatting and working with dates.
 
-## Get a fresh project
+- **SportMonks API**  
+  Gets real football data: fixtures, scores, standings, players, etc.
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

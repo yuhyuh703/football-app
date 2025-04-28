@@ -69,11 +69,7 @@ export default function Team() {
               {
                 value: 'squad',
                 label: 'Squad',
-              },
-              {
-                value: 'matches',
-                label: 'Matches',
-              },
+              }
             ]}
             style={styles.segmented}
           />

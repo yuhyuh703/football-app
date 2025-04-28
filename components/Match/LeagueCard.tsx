@@ -21,7 +21,7 @@ export default function LeagueCard({ league }: { league: League }) {
     <SafeAreaProvider>
       <SafeAreaView>
       <View style={styles.card}>
-      {/* Header */}
+
       <TouchableOpacity style={styles.header} onPress={handleLeaguePress}>
         <Image source={{ uri: league.image_path }} style={styles.logo} />
         <View style={styles.leagueInfo}>
@@ -30,7 +30,7 @@ export default function LeagueCard({ league }: { league: League }) {
         </View>
       </TouchableOpacity>
 
-      {/* Matches */}
+
       <View style={styles.content}>
         {league.today.map((match, idx) => (
           <MatchCard match={match} key={idx} />

@@ -66,14 +66,14 @@ export default function FixtureInfo() {
       <SafeAreaView style={{ flex: 1 }}>
         <Stack.Screen options={{ headerShown: false }} />
 
-        {/* Header */}
+
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="chevron-back" size={28} color="#000" />
           </TouchableOpacity>
         </View>
 
-        {/* Content */}
+
         {loading ? (
           <SkeletonComponent />
         ) : (

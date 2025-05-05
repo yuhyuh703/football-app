@@ -40,17 +40,7 @@ export default function FixtureDetails({ statistics, teams }: FixtureDetailsProp
         <View style={[styles.barSide, { width: `${home.posession}%`, backgroundColor: '#fff' }]}>
           <Text style={styles.barText}>{home.posession}%</Text>
         </View>
-        <View
-          style={[
-            styles.barSide,
-            {
-              width: `${away.posession}%`,
-              backgroundColor: '#1a1a1a',
-              borderTopRightRadius: 20,
-              borderBottomRightRadius: 20,
-            },
-          ]}
-        >
+        <View style={[ styles.barSide, { width: `${away.posession}%`, backgroundColor: '#1a1a1a',},]}>
           <Text style={[styles.barText, { color: '#fff' }]}>{away.posession}%</Text>
         </View>
       </View>

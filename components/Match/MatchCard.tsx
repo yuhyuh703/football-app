@@ -10,6 +10,7 @@ export default function MatchCard({ match }: { match: Match }) {
   const [teams, setTeams] = useState<{ home: Participant; away: Participant } | null>(null);
 
   const getScore = (team: string) =>
+    // type id 1525 is for the current score
     match.scores?.find(
       (score) => score.type_id === 1525 && score.score.participant === team
     )?.score?.goals ?? 0;

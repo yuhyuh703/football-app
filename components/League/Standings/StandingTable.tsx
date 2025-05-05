@@ -20,7 +20,7 @@ export default function StandingTable({ standingData }: StandingTableProps) {
       <SafeAreaProvider>
         <SafeAreaView style={styles.flex}>
           <View style={styles.container}>
-            {/* Header Row */}
+ 
             <View style={[styles.row, styles.headerRow]}>
               <Text style={[styles.rank, styles.headerCell]}>#</Text>
               <Text style={[styles.team, styles.headerCell]}>Team</Text>
@@ -31,7 +31,7 @@ export default function StandingTable({ standingData }: StandingTableProps) {
               <Text style={[styles.points, styles.headerCell]}>Pts</Text>
             </View>
 
-            {/* Scrollable Rows */}
+
             <ScrollView>
               {standingData.map((item) => (
                 <TouchableOpacity
@@ -49,10 +49,10 @@ export default function StandingTable({ standingData }: StandingTableProps) {
                         {item.participant.short_code || item.participant.name}
                       </Text>
                     </View>
-                    <Text style={styles.mp}>{item.details.find(d => d.type_id === 129)?.value || 'N/A'}</Text>
-                    <Text style={styles.stat}>{item.details.find(d => d.type_id === 130)?.value || 'N/A'}</Text>
-                    <Text style={styles.stat}>{item.details.find(d => d.type_id === 131)?.value || 'N/A'}</Text>
-                    <Text style={styles.stat}>{item.details.find(d => d.type_id === 132)?.value || 'N/A'}</Text>
+                    <Text style={styles.mp}>{String(item.details.find(d => d.type_id === 129)?.value || 'N/A')}</Text>
+                    <Text style={styles.stat}>{String(item.details.find(d => d.type_id === 130)?.value || 'N/A')}</Text>
+                    <Text style={styles.stat}>{String(item.details.find(d => d.type_id === 131)?.value || 'N/A')}</Text>
+                    <Text style={styles.stat}>{String(item.details.find(d => d.type_id === 132)?.value || 'N/A')}</Text>
                     <Text style={styles.points}>{item.points}</Text>
                   </View>
                 </TouchableOpacity>

@@ -42,7 +42,7 @@ export default function Team() {
       <SafeAreaProvider>
         <SafeAreaView style={styles.safeArea}>
           <Stack.Screen options={{ headerShown: false }} />
-          {/* Custom Header */}
+    
           <View style={styles.header}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
               <Ionicons name="chevron-back" size={28} color="#000" />
@@ -57,7 +57,7 @@ export default function Team() {
             </View>
           </View>
 
-          {/* Segmented Buttons */}
+  
           <SegmentedButtons
             value={selectedTab}
             onValueChange={setSelectedTab}

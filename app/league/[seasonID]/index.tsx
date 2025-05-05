@@ -17,7 +17,6 @@ export default function League() {
     
     <SafeAreaView style={styles.safeArea}>
       <Stack.Screen options={{ headerShown: false }} />
-      {/* Custom Header */}
 
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -33,7 +32,6 @@ export default function League() {
         </View>
       </View>
 
-      {/* Tabs */}
       <SegmentedButtons
         value={selectedTab}
         onValueChange={setSelectedTab}
@@ -45,7 +43,6 @@ export default function League() {
         
       />
 
-      {/* Content */}
       <View style={styles.content}>
         {selectedTab === 'standings' && <Standings />}
         {selectedTab === 'topscorers' && <TopScorers />}

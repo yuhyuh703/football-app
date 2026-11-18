@@ -21,7 +21,7 @@ export default function Layout() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="football" size={size} color={color} />
+            <Ionicons name="football" size={size} color={color as string} />
           ),
         }}
       />
@@ -30,7 +30,7 @@ export default function Layout() {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="swap-horizontal-outline" size={size} color={color} />
+            <Ionicons name="swap-horizontal-outline" size={size} color={color as string} />
           ),
         }}
       />

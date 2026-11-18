@@ -51,7 +51,7 @@ export default function Matches() {
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
-            <Image source={require('/Users/matic/mobile/myapp/assets/images/crnazbal.png')} style={{ width: 40, height: 40, marginLeft: 10 }} />
+            <Image source={require('@/assets/images/crnazbal.png')} style={{ width: 40, height: 40, marginLeft: 10 }} />
             <View style={styles.dateRow}>
               <Text style={styles.dateText}>
                 {selectedDate.dateString === new Date().toISOString().split("T")[0] 
